@@ -1,0 +1,6 @@
+package traning;
+
+class Exercise {
+
+
+}

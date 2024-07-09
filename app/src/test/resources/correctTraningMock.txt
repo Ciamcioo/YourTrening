@@ -1,0 +1,10 @@
+2
+1
+Exercises1
+30
+It is a description of first exercises.
+Exercises2
+45
+I is a description of second exercises.
+60
+15

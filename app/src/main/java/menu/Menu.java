@@ -2,8 +2,6 @@ package menu;
 
 import java.io.*;
 
-import com.google.j2objc.annotations.Weak;
-
 public final class Menu {
     private static final String MENU_CONTECST = "------ Your trainign main menu ------\n1. Load training\n2. Start training\n3. Exit application\n";
     private static final int MENU_SIZE = 3, BREAK_HADNLING_INPUT = -1 ;
@@ -79,11 +77,14 @@ public final class Menu {
     private boolean performeMenuAction(int input) {
         switch(input) {
             case 1 -> { return false; }
-            case 2 -> { return false; } 
+            case 2 -> { 
+                
+                return false;
+            } 
             case 3 -> { return true; }
         }
         return false;
     }
 
-    
+    // TODO write closing method for the reader    
 }
