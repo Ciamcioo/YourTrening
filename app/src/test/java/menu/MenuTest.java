@@ -3,6 +3,8 @@ package menu;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.io.*;
 import java.util.*;
@@ -115,6 +117,28 @@ class MenuTest {
         assertEquals(true, result);
         performeMenuAction.setAccessible(false);
         performeMenuAction = null;
+    }
+
+    @Test
+    void closeStreamTest() {
+        boolean result = false; 
+        BufferedReader reader = null;
+
+        Method closeStream = findPrivateMethod("closeStream");
+        if (closeStream == null)
+            fail("Method not found");
+        closeStream.setAccessible(true);
+        try {
+            reader = new BufferedReader(new FileReader("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTraningMock.txt"));
+        } catch(Exception e) {
+            fail(e.getMessage());
+        }
+        try {
+            result = (boolean) closeStream.invoke(menu, reader);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            fail(e.getMessage());
+        }
+        assertEquals(true, result);
     }
 
 
