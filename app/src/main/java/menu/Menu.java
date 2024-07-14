@@ -5,12 +5,19 @@ import java.io.*;
 public final class Menu {
     private static final String MENU_CONTECST = "------ Your trainign main menu ------\n1. Load training\n2. Start training\n3. Exit application\n";
     private static final int MENU_SIZE = 3, BREAK_HADNLING_INPUT = -1 ;
+
     private static Menu instance;
-    private static final InputStream inputStream = System.in;
+    private InputStream inputStream = System.in;
+    private InputStreamReader reader;
 
     private Menu() {
+        reader = new InputStreamReader(inputStream);
     }
 
+    /**
+     * Method implements the Singleton design pattern to ensure that the only one instance of the Menu class is created. 
+     * @return the referance to the Menu object.
+     */
     public static Menu getInstance() {
         if (instance == null) {
             instance = new Menu();
@@ -18,6 +25,9 @@ public final class Menu {
         return instance;
     }
 
+    /**
+     * Method handling running process for the menu, which containes a several methods providing sets of action to properly handle processing of the application. 
+     */
     public void menuRunner() {
         int input = -1; 
         boolean shouldStop = false;
@@ -28,6 +38,7 @@ public final class Menu {
             shouldStop = performeMenuAction(input);
 
         } while(shouldStop);
+        closeStream(reader);
     }
 
     /**
@@ -86,5 +97,18 @@ public final class Menu {
         return false;
     }
 
-    // TODO write closing method for the reader    
+    /**
+     * Function responsible for closing stream whithin the range of traning class. 
+     * @param stream object implementing Closeable interface which will be closed 
+     * @return Method returns true if closing action was a success, in other case method returns false
+     */
+    private boolean closeStream(Closeable stream) {
+        try {
+            stream.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
 }
