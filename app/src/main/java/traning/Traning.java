@@ -26,10 +26,16 @@ public class Traning implements TraningManagment{
 
     @Override
     public void procesTraining() {
-        // TODO Auto-generated method stub
+        // TODO Process training implementation 
         throw new UnsupportedOperationException("Unimplemented method 'procesTraining'");
     }
 
+    /**
+     * Method tries to open new stream to the file which path is provided as an argument.
+     * If the operation is unsucesfull method returns null pointer.  
+     * @param path path to the file provided in String object 
+     * @return in case of success referenc to newly created stream, in other case null pointer 
+     */
     private FileInputStream openTraningFile(String path) {
         try {
             return new FileInputStream(path);
@@ -38,27 +44,35 @@ public class Traning implements TraningManagment{
         }
     }
 
+    /**
+     * Method extracts data provided from file stream. Based on the results of individual extractions whole extraction result 
+     * String objet is build which provide infomration about obstacles in extraction of data from the stream. 
+     * @param fis file input strema provided as an argument from which data will be extracted
+     * @return String object containing infomration about unsuccesful stages of fetching data
+     */
     private String extractTraninig(FileInputStream fis) {
         StringBuilder extractionResult = new StringBuilder();
         BufferedReader reader = new BufferedReader(new InputStreamReader(fis)); 
-        byte iterator = 0;
         try {
             extractionResult.append(setSeries(reader.readLine())); 
-            extractionResult.append(setRestTimeBetweenExercises(reader.readLine()));
+            extractionResult.append(setRestTimeBetweenSeries(reader.readLine()));
             extractionResult.append(setExercisesNumber(reader.readLine()));
             extractionResult.append(setRestTimeBetweenExercises(reader.readLine()));
-            while (reader.ready() && iterator < exercisesNumber) {
-                 
+            for (int exercisesIterator = 0; reader.ready() && exercisesIterator < exercisesNumber; exercisesIterator++) {
+                exercises.add(new Exercise(reader.readLine()));
             }
         } catch (IOException e) {
 
         }
-
-
-
         return extractionResult.toString();
     }
 
+    /**
+     * Method converts String object provided as an argument to Long value.
+     * In case of exception method returns default value.  
+     * @param value String object which will be converted to long value
+     * @return method returns the value converted, in case of exception method returns -1 
+     */
     private long convertStringToLong(String value) {
         try {
             return Long.parseLong(value);
@@ -67,9 +81,18 @@ public class Traning implements TraningManagment{
         }
     }
 
-    private String setSeries(String value) {
+// SETTERS
+
+    /**
+     * Setter for series which should fit in the range from 0 exclusive to max value of byte inclusive.
+     * If the value is above the range the series is set to long byte value.
+     * In case of value smaller than zero or zero the object's variable is set to default value. 
+     * @param seriesNumber value provided for a series in form of a String
+     * @return method returns string containing information about the result of setter method.
+     */
+    private String setSeries(String seriesNumber) {
         variableName = "Series number";
-        long series = convertStringToLong(value);
+        long series = convertStringToLong(seriesNumber);
         if (series > Byte.MAX_VALUE) {
             this.series = Byte.MAX_VALUE;
             return String.format(INCORECT_INPUT_TEMPLET, variableName, Byte.MAX_VALUE);
@@ -83,6 +106,13 @@ public class Traning implements TraningManagment{
         return CORRECT_INPUT_VALUE; 
     }
 
+    /**
+     * Setter for restTimeBetweenSeries which should fit in the range from 0 exclusive to max value of long inclusive.
+     * If the value is above the range the rest time between series is set to long max value.
+     * In case of value smaller than zero or zero the object's variable is set to default value. 
+     * @param restTimeSeries value provided for a rest time between series in form of a String
+     * @return method returns string containing information about the result of setter method.
+     */
     private String setRestTimeBetweenSeries(String restTimeSeries) {
         variableName = "Rest time between series";
         long restTimeSeriesSec = convertStringToLong(restTimeSeries);
@@ -99,6 +129,13 @@ public class Traning implements TraningManagment{
         return CORRECT_INPUT_VALUE; 
     }
 
+    /**
+     * Setter for exercisesNumber which should fit in the range from 0 exclusive to max value of byte inclusive.
+     * If the value is above the range the exercises number is set to byte max value.
+     * In case of value smaller than zero or zero the object's variable is set to default value. 
+     * @param value value provided for a exercises number in form of a String
+     * @return method returns string containing information about the result of setter method.
+     */
     private String setExercisesNumber(String value) {
         variableName = "Exercises number";
         long exercisesNumber = convertStringToLong(value);
@@ -115,6 +152,12 @@ public class Traning implements TraningManagment{
         return CORRECT_INPUT_VALUE;
     } 
 
+    /**
+     * Setter for restTimeBetweenExercises which should fit in the range from 0 exclusive to max value of integer inclusive. If the value is above the range the rest time is set to integer max value.
+     * In case of value smaller than zero or zero the object's variable is set to default value. 
+     * @param restTimeExercises value provided for a restTimeBetweenExercise in form of a String
+     * @return method reutrns string containing the information about the result of setter method. 
+     */
     private String setRestTimeBetweenExercises(String restTimeExercises) {
         variableName = "Rest time between exercises";
         long restTimeExercisesSec = convertStringToLong(restTimeExercises); 
@@ -131,7 +174,4 @@ public class Traning implements TraningManagment{
         }
         return CORRECT_INPUT_VALUE;
     }
-
-    
-
 }
