@@ -3,7 +3,7 @@
 YourTraining is simple application which is supposed to help you with your indoor traning. Allows you to load your training into the app and keep track of current exercise during training. Application monitor series, rest time between series, exercise type, exercise time exectuion time and rest time bewteen exercises.  
 
 ## Futures
-- gradle build tool
+- Gradle build tool
 - JUnit tests 
 
 ## Instalation
@@ -23,7 +23,7 @@ YourTraining is simple application which is supposed to help you with your indoo
 6. Open pull request
 
 ## License
-This project is licensed under the ...
+This project is licensed under the GNU License - see the [LICENSE](LICENSE) file for details. 
 
 ## Contact
 Created by [Ciamcio](https://github.com/Ciamcioo) - feel free to get in touch!
