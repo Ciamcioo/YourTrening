@@ -2,9 +2,6 @@ package traning;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-
-import com.google.j2objc.annotations.Weak;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.io.*;
@@ -41,7 +38,7 @@ public class TraningTest {
             fail("File should be found");
         }
 
-        Method extractTraning = findPrivateMethod("extractTraning"); 
+        Method extractTraning = findPrivateMethod("extractTraninig"); 
         if (extractTraning == null)
             fail("Method not found");
         extractTraning.setAccessible(true);
@@ -51,6 +48,7 @@ public class TraningTest {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail("Method shouldn't thow an excption");
         }
+        assertEquals(CORRECT_RESULT, result);
 
     }
 
