@@ -87,7 +87,7 @@ class ExerciseTest {
     void fillExercisesInformationSizeDifferenceTest() {
         int resultSize = 0;
         List<String> exerciseData = new ArrayList<>();
-        Method fillExercisesInfromation = findMethod("fillExercisesInformationSizeDifference");
+        Method fillExercisesInfromation = findMethod("lineExerciseInformationSizeDifference");
         if (fillExercisesInfromation == null)
             fail("Method not found");
         fillExercisesInfromation.setAccessible(true);

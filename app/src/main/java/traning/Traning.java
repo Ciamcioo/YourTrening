@@ -1,10 +1,15 @@
 package traning;
 
 import java.util.*;
+
+import com.google.common.io.Closeables;
+
 import java.io.*;
 
 public class Traning implements TraningManagment{
-    private static final String INCORECT_INPUT_TEMPLET = "%s has been set to %d, because the value read from file was inapproprited or too big.\n", CORRECT_INPUT_VALUE = ""; 
+    private static final String INCORECT_INPUT_TEMPLET = "%s has been set to %d, because the value read from file was inapproprited or too big.\n", 
+                                CORRECT_INPUT_VALUE = "",
+                                EXTRACT_TRANING_ERROR_MESSAGE = "During extracting the data from a file ocuread an error, operation couldn't been finished";  
     private static final byte DEFAULT_SERIES_NUMBER = 1, DEFAULT_EXERCISES_NUMBER = 1;
     private static final long DEFAULT_SERIES_REST_TIME = 60;
     private static final int DEFAULT_EXERCISES_REST_TIME = 15;
@@ -21,6 +26,11 @@ public class Traning implements TraningManagment{
         FileInputStream traningSchedule = openTraningFile(path);
         if (traningSchedule == null) 
             return false;
+        String extractionResult = extractTraninig(traningSchedule);  
+        if (extractionResult.equals(EXTRACT_TRANING_ERROR_MESSAGE))
+            return false;
+        else if(!extractionResult.equals(""))
+            System.out.println(extractionResult);
         return true;
     }
 
@@ -58,11 +68,14 @@ public class Traning implements TraningManagment{
             extractionResult.append(setRestTimeBetweenSeries(reader.readLine()));
             extractionResult.append(setExercisesNumber(reader.readLine()));
             extractionResult.append(setRestTimeBetweenExercises(reader.readLine()));
+            manageExercisesList(); 
             for (int exercisesIterator = 0; reader.ready() && exercisesIterator < exercisesNumber; exercisesIterator++) {
                 exercises.add(new Exercise(reader.readLine()));
             }
         } catch (IOException e) {
-
+            return EXTRACT_TRANING_ERROR_MESSAGE; 
+        } finally {
+           closeStream(reader); 
         }
         return extractionResult.toString();
     }
@@ -78,6 +91,15 @@ public class Traning implements TraningManagment{
             return Long.parseLong(value);
         } catch(Exception e) {
             return -1;
+        }
+    }
+
+    private void manageExercisesList() {
+        if (exercises == null)
+            exercises = new ArrayList<Exercise>();
+        else {
+            exercises.clear();
+            exercises = new ArrayList<Exercise>();
         }
     }
 
@@ -173,5 +195,24 @@ public class Traning implements TraningManagment{
             return String.format(INCORECT_INPUT_TEMPLET, variableName, DEFAULT_EXERCISES_REST_TIME);
         }
         return CORRECT_INPUT_VALUE;
+    }
+
+    /**
+     * Method responsible for attempting to close the stream. 
+     * @param stream stream implementing closable interface allowing to close it
+     * @return returns true if stream was closed correctly, in other case value returned is false
+     */
+    private boolean closeStream(Closeable stream) {
+        try {
+            stream.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+// GETTERS 
+    public List<Exercise> getExercisesList() {
+        return exercises;
     }
 }

@@ -7,37 +7,34 @@ import java.lang.reflect.Method;
 import java.io.*;
 
 public class TraningTest {
-    private static final String INCORRECT_STR_INPUT = "word", CORRECT_STR_INPUT = String.valueOf(2);
-    private static final String RESULT_TO_INCORRECT_INPUT_TEMPLATE = "%s has been set to %d, because the value read from file was inapproprited or too big.\n";
-    private static final String CORRECT_RESULT = "";
+    private static final String INCORRECT_STR_INPUT = "word", CORRECT_STR_INPUT = String.valueOf(2),
+                                RESULT_TO_INCORRECT_INPUT_TEMPLATE = "%s has been set to %d, because the value read from file was inapproprited or too big.\n",
+                                PATH_TO_CORRECT_TRANING = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTraningMock.txt",
+                                PATH_TO_INCORRECT_TRANING = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/incorrectTraninigMock.txt",
+                                CORRECT_RESULT = "",
+                                INCORRECT_RESULT = "Series number has been set to 127, because the value read from file was inapproprited or too big.\n" + 
+                                                   "Rest time between series has been set to 60, because the value read from file was inapproprited or too big.\n" +
+                                                   "Rest time between exercises has been set to 2147483647, because the value read from file was inapproprited or too big.\n";
     private static final Byte DEFAULT_SERIES_NUMBER = 1, DEFAULT_EXERCISES_NUMBER = 1;
     private static final Long DEFAULT_SERIES_REST_TIME = 60L, DEFAULT_EXERCISES_REST_TIME = 15L;
-    private static final String pathToCorrectTraning = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTraningMock.txt";
- 
 
     private static String tooLargeInput, variableName;
     private static Traning traning = new Traning();
     private static Method[] privMethods = Traning.class.getDeclaredMethods(); 
-
-    @Test
     public void loadTraning() {
         String pathToTraningSchedule = "empty";
         boolean loadingResult = traning.loadTraning(pathToTraningSchedule);
         assertEquals(false, loadingResult);
-        loadingResult = traning.loadTraning(pathToCorrectTraning);
+        loadingResult = traning.loadTraning(PATH_TO_CORRECT_TRANING);
+        assertEquals(true, loadingResult);
+        loadingResult = traning.loadTraning(PATH_TO_INCORRECT_TRANING);
         assertEquals(true, loadingResult);
     }
 
     @Test
     public void extractTraningTest() {
         String result = "";  
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(pathToCorrectTraning);
-        } catch (FileNotFoundException e) {
-            fail("File should be found");
-        }
-
+        FileInputStream fis = createFileStream(PATH_TO_CORRECT_TRANING);
         Method extractTraning = findPrivateMethod("extractTraninig"); 
         if (extractTraning == null)
             fail("Method not found");
@@ -45,11 +42,24 @@ public class TraningTest {
 
         try {
             result = (String) extractTraning.invoke(traning, fis);
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail("Method shouldn't thow an excption");
+        } catch (IllegalAccessException e) {
+            fail("IllegalAccessException");
+        } catch (IllegalArgumentException e) {
+            fail("IllegalArgumentExcpetion");
+        } catch (InvocationTargetException e) {
+            Throwable cause = e.getCause();
+            cause.printStackTrace();
+            fail(e.getCause());
         }
         assertEquals(CORRECT_RESULT, result);
 
+        fis = createFileStream(PATH_TO_INCORRECT_TRANING);
+        try {
+            result = (String) extractTraning.invoke(traning, fis);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            fail(e.getMessage());
+        }
+        assertEquals(INCORRECT_RESULT, result);
     }
 
     @Test
@@ -181,7 +191,7 @@ public class TraningTest {
     }
 
     @Test
-    public void convertStringToIntegerTest() {
+    public void convertStringToLongTest() {
         String validInput = "1", invalidInput = "word";
         long result = 0;
         Method convertMethod = findPrivateMethod("convertStringToLong");
@@ -213,13 +223,13 @@ public class TraningTest {
             fail("Method not found");
         openTraningFile.setAccessible(true);
         try {
-            testFile = (FileInputStream) openTraningFile.invoke(traning, pathToCorrectTraning);
+            testFile = (FileInputStream) openTraningFile.invoke(traning, PATH_TO_CORRECT_TRANING);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getMessage());
         }
         assertNotNull(testFile);
 
-        String copyToCorrectTraning = pathToCorrectTraning;
+        String copyToCorrectTraning = PATH_TO_CORRECT_TRANING;
         copyToCorrectTraning = null;
         try {
             testFile = (FileInputStream) openTraningFile.invoke(traning, copyToCorrectTraning);
@@ -232,12 +242,58 @@ public class TraningTest {
         openTraningFile = null;
     }
 
+    @Test
+    public void closeStreamTest() {
+        boolean result = false; 
+        BufferedReader reader = null;
+
+        Method closeStream = findPrivateMethod("closeStream");
+        if (closeStream == null)
+            fail("Method not found");
+        closeStream.setAccessible(true);
+        try {
+            reader = new BufferedReader(new FileReader("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTraningMock.txt"));
+        } catch(Exception e) {
+            fail(e.getMessage());
+        }
+        try {
+            result = (boolean) closeStream.invoke(traning, reader);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            fail(e.getMessage());
+        }
+        assertEquals(true, result);
+    }
+
+    @Test
+    public void manageExercisesListTest() {
+        String result = "";
+        Method manageExercise = findPrivateMethod("manageExercisesList"); 
+        if (manageExercise == null) 
+            fail("Method not found");
+        manageExercise.setAccessible(true);
+        try {
+            manageExercise.invoke(traning);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            fail(e.getCause());
+        }
+        assertNotNull(traning.getExercisesList());
+    } 
+
+
     Method findPrivateMethod(String methodName) {
         for (Method method : privMethods) {
             if (method.getName().equals(methodName))
                 return method;
         }
         return null;
+    }
+
+    FileInputStream createFileStream(String path) {
+        try {
+            return new FileInputStream(path);
+        } catch(IOException exception) {
+            return null;
+        }
     }
 
 }
