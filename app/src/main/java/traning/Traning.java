@@ -1,9 +1,6 @@
 package traning;
 
 import java.util.*;
-
-import com.google.common.io.Closeables;
-
 import java.io.*;
 
 public class Traning implements TraningManagment{
@@ -38,8 +35,7 @@ public class Traning implements TraningManagment{
 
     @Override
     public void procesTraining() {
-        // TODO Process training implementation 
-        throw new UnsupportedOperationException("Unimplemented method 'procesTraining'");
+        // TODO write the implementation of the method
     }
 
     /**
