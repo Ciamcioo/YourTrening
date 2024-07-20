@@ -1,13 +1,16 @@
 package menu;
 
 import java.io.*;
+import traning.Traning;
 
 public final class Menu {
-    private static final String MENU_CONTECST = "------ Your trainign main menu ------\n1. Load training\n2. Start training\n3. Exit application\n";
+    private static final String MENU_CONTECST = "------ Your trainign main menu ------\n1. Load training\n2. Start training\n3. Exit application\n",
+                                PATH_LOAD_CONTECST = "Provide absolute path to traning file\n";
     private static final int MENU_SIZE = 3, BREAK_HADNLING_INPUT = -1 ;
 
     private static Menu instance;
     private InputStream inputStream = System.in;
+    private Traning traning = null;
 
     /**
      * Method implements the Singleton design pattern to ensure that the only one instance of the Menu class is created. 
@@ -94,9 +97,14 @@ public final class Menu {
         return false;
     }
 
-    private boolean performeMenuAction(int input) {
+    boolean performeMenuAction(int input) {
         switch(input) {
-            case 1 -> { return false; }
+            case 1 -> { 
+                clearTerminal();
+                String path = getPathToTraning(); 
+                System.out.println(traning.loadTraning(path));
+                return false; 
+            }
             case 2 -> { 
                 
                 return false;
@@ -118,6 +126,16 @@ public final class Menu {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    /**
+     * Method prints information about path and gets the path from stream 
+     * @return method returns the path to traning file
+     */
+    String getPathToTraning() {
+        System.out.println(PATH_LOAD_CONTECST);
+        String path = getInput(inputStream);
+        return path;
     }
 
     /**
