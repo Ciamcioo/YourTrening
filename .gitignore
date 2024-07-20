@@ -6,3 +6,6 @@ build
 
 # Ignore VS code folder
 .vscode
+
+# Ignore other build outp direcotry
+bin
