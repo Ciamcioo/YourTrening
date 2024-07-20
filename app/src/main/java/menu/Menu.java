@@ -50,7 +50,7 @@ public final class Menu {
         boolean isNotValid = false;
         int input = -1, attempts = 3; 
         do {
-            input = getInput(stream); 
+            input = getIntegerInput(stream); 
             isNotValid = !validateInput(input);
         } while(isNotValid && attempts-- > 0 );
         if (isNotValid)
@@ -59,17 +59,32 @@ public final class Menu {
     }
 
     /**
-     * Method gets integer value from provided input stream which is input
+     * Method converts string value to integer value.
      * @param stream input stream which is the source of input 
-     * @return returns the value from the stream as an Integer. In case the value cannot be converted to Integer 0 is returned.
+     * @return returns the Integer converted from String value read from stream. In case the value cannot be converted to Integer 0 is returned.
      */
-    private int getInput(InputStreamReader stream) {
-        BufferedReader reader = new BufferedReader(stream);
-        System.out.println("> ");
+    private int getIntegerInput(InputStream stream) {
         try {
-            return Integer.parseInt(reader.readLine());
+            return Integer.parseInt(getInput(stream));
         } catch(Exception e) {
             return 0;
+        }
+    }
+
+    /**
+     * Method reads input from the stream which is provided as an arguemnt. 
+     * @param stream input stream which is source of input
+     * @return returns the value from the stream. In case of exception the value return is null.
+     */
+    private String getInput(InputStream stream) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream)); 
+        System.out.println("> ");
+        try {
+            return reader.readLine();
+        } catch (IOException e) {
+            return null;
+        } finally {
+            closeStream(reader);
         }
     }
 
