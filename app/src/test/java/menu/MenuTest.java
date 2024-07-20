@@ -142,12 +142,12 @@ class MenuTest {
         try {
             reader = new BufferedReader(new FileReader("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTraningMock.txt"));
         } catch(Exception e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         try {
             result = (boolean) closeStream.invoke(menu, reader);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(true, result);
     }

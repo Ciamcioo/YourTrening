@@ -33,7 +33,7 @@ class ExerciseTest {
             resultExecutionTime = (long) getExecutionTime.invoke(exercise); 
             resultDescription = (String) getDescription.invoke(exercise);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(exerciseSplited[0], resultName);
         assertEquals(exerciseSplited[1], String.valueOf(resultExecutionTime));
@@ -46,7 +46,7 @@ class ExerciseTest {
             resultExecutionTime = (long) getExecutionTime.invoke(exercise);
             resultDescription = (String) getDescription.invoke(exercise);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         } 
         assertEquals("None exercise name", resultName);
         assertEquals(exerciseSplited[1], String.valueOf(resultExecutionTime));
@@ -61,7 +61,7 @@ class ExerciseTest {
             resultExecutionTime = (long) getExecutionTime.invoke(exercise);
             resultDescription = (String) getDescription.invoke(exercise);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         } 
         assertEquals(exerciseSplited[0], resultName);
         assertEquals("45", String.valueOf(resultExecutionTime));
@@ -76,7 +76,7 @@ class ExerciseTest {
             resultExecutionTime = (long) getExecutionTime.invoke(exercise);
             resultDescription = (String) getDescription.invoke(exercise);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         } 
         assertEquals(exerciseSplited[0], resultName);
         assertEquals("45", String.valueOf(resultExecutionTime));
@@ -94,7 +94,7 @@ class ExerciseTest {
         try {
             resultSize = (int) fillExercisesInfromation.invoke(exercise, exerciseData);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(EXERCISE_INFORMATION_IN_LINE, resultSize);
         assertEquals(EXERCISE_INFORMATION_IN_LINE, exerciseData.size()); 
@@ -104,7 +104,7 @@ class ExerciseTest {
         try {
             resultSize = (int) fillExercisesInfromation.invoke(exercise, exerciseData);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(2, resultSize);
         assertEquals(EXERCISE_INFORMATION_IN_LINE, exerciseData.size()); 
@@ -116,7 +116,7 @@ class ExerciseTest {
         try {
             resultSize = (int) fillExercisesInfromation.invoke(exercise, exerciseData);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(1, resultSize);
         assertEquals(EXERCISE_INFORMATION_IN_LINE, exerciseData.size()); 
@@ -128,7 +128,7 @@ class ExerciseTest {
         try {
             resultSize = (int) fillExercisesInfromation.invoke(exercise, exerciseData);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(0, resultSize);
         assertEquals(EXERCISE_INFORMATION_IN_LINE, exerciseData.size()); 

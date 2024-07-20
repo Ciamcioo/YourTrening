@@ -50,7 +50,7 @@ public class TraningTest {
         try {
             testFile = (FileInputStream) openTraningFile.invoke(traning, PATH_TO_CORRECT_TRANING);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertNotNull(testFile);
 
@@ -86,7 +86,7 @@ public class TraningTest {
         try {
             result = (String) extractTraning.invoke(traning, fis);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(INCORRECT_RESULT, result);
         extractTraning.setAccessible(false);
@@ -104,14 +104,14 @@ public class TraningTest {
         try {
             result = (Long) convertMethod.invoke(traning, validInput);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(1, result);
 
         try {
             result = (Long) convertMethod.invoke(traning, invalidInput);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(-1, result);
         convertMethod.setAccessible(false);
@@ -144,20 +144,20 @@ public class TraningTest {
         try {
             result = (String) setSeries.invoke(traning, INCORRECT_STR_INPUT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, DEFAULT_SERIES_NUMBER), result);
         try {
             result = (String) setSeries.invoke(traning, CORRECT_STR_INPUT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(CORRECT_RESULT, result);
 
         try {
             result = (String) setSeries.invoke(traning, tooLargeInput);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Byte.MAX_VALUE), result);
         setSeries.setAccessible(false);
@@ -177,21 +177,21 @@ public class TraningTest {
         try {
             result = (String) setRestTimeBetweenSeries.invoke(traning, INCORRECT_STR_INPUT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, DEFAULT_SERIES_REST_TIME), result);
 
         try {
             result = (String) setRestTimeBetweenSeries.invoke(traning, CORRECT_STR_INPUT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(CORRECT_RESULT, result);
 
         try {
             result = (String) setRestTimeBetweenSeries.invoke(traning, tooLargeInput);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Long.MAX_VALUE), result);
     }
@@ -210,21 +210,21 @@ public class TraningTest {
         try {
             result = (String) setExercisesNumber.invoke(traning, INCORRECT_STR_INPUT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, DEFAULT_EXERCISES_NUMBER), result);
 
         try {
             result = (String) setExercisesNumber.invoke(traning, CORRECT_STR_INPUT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(CORRECT_RESULT, result);
 
         try {
             result = (String) setExercisesNumber.invoke(traning, tooLargeInput);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Byte.MAX_VALUE), result);
     }
@@ -243,21 +243,21 @@ public class TraningTest {
         try {
             result = (String) setRestTimeExercises.invoke(traning, INCORRECT_STR_INPUT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, DEFAULT_EXERCISES_REST_TIME), result);
 
         try {
             result = (String) setRestTimeExercises.invoke(traning, CORRECT_STR_INPUT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(CORRECT_RESULT, result);
 
         try {
             result = (String) setRestTimeExercises.invoke(traning, tooLargeInput);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Integer.MAX_VALUE), result);
     }
@@ -274,12 +274,12 @@ public class TraningTest {
         try {
             reader = new BufferedReader(new FileReader("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTraningMock.txt"));
         } catch(Exception e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         try {
             result = (boolean) closeStream.invoke(traning, reader);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail(e.getMessage());
+            fail(e.getCause());
         }
         assertEquals(true, result);
     }
