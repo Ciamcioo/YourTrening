@@ -8,11 +8,6 @@ public final class Menu {
 
     private static Menu instance;
     private InputStream inputStream = System.in;
-    private InputStreamReader reader;
-
-    private Menu() {
-        reader = new InputStreamReader(inputStream);
-    }
 
     /**
      * Method implements the Singleton design pattern to ensure that the only one instance of the Menu class is created. 
@@ -34,11 +29,10 @@ public final class Menu {
         
         do {
             System.out.println(MENU_CONTECST);
-            input = handleInput(new InputStreamReader(inputStream)); 
+            input = handleInput(inputStream); 
             shouldStop = performeMenuAction(input);
 
         } while(shouldStop);
-        closeStream(reader);
     }
 
     /**
@@ -46,7 +40,7 @@ public final class Menu {
      * @param stream input stream which is the source of an input
      * @return  in case of correct input the value of input is returned, if 3 attempts of reading from stream will be unsucesful hadnling of the input is terminated by returning -1
      */
-    private int handleInput(InputStreamReader stream) {
+    private int handleInput(InputStream stream) {
         boolean isNotValid = false;
         int input = -1, attempts = 3; 
         do {
