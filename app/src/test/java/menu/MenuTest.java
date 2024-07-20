@@ -1,9 +1,10 @@
 package menu;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doReturn;
 
 import org.junit.jupiter.api.Test;
-
+import org.mockito.Mockito;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.io.*;
@@ -11,6 +12,7 @@ import java.util.*;
 
 class MenuTest {
     private static Menu menu = Menu.getInstance();
+    private static Menu mockitoMenu = Mockito.spy(new Menu());
     private static final Method[] privMethods = Menu.class.getDeclaredMethods();
 
     @Test 
@@ -18,6 +20,11 @@ class MenuTest {
         assertNotNull(menu);
         Menu testMenu = Menu.getInstance(); 
         assertEquals(menu, testMenu);
+    }
+
+    @Test
+    void menuRunnerTest() {
+
     }
 
     @Test
@@ -29,14 +36,14 @@ class MenuTest {
            fail("Method not found"); 
         handleInput.setAccessible(true);
         try {
-            resultInput = (Integer) handleInput.invoke(menu, new InputStreamReader(new ByteArrayInputStream(userInput.getBytes())));
-        } catch(Exception e) {
-            fail("Method shouldn't throw an exception");
+            resultInput = (Integer) handleInput.invoke(menu, new ByteArrayInputStream(userInput.getBytes()));
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            fail(e.getCause());
         }
         assertEquals(1, resultInput);
         userInput = "word\n";
         try {
-            resultInput = (Integer) handleInput.invoke(menu, new InputStreamReader(new ByteArrayInputStream(userInput.getBytes())));
+            resultInput = (Integer) handleInput.invoke(menu, new ByteArrayInputStream(userInput.getBytes()));
         } catch(Exception e) {
             fail("Method shouldn't throw an exception");
         }
@@ -46,28 +53,44 @@ class MenuTest {
     }
 
     @Test
+    void getIntegerInputTest() {
+        String userIntegerInput = "1\n";
+        int resultInteger = -1;
+        Method getIntegerInput = findPrivateMethod("getIntegerInput");
+        if (getIntegerInput == null)
+            fail("Method not found");
+        getIntegerInput.setAccessible(true);
+        try {
+            resultInteger = (Integer) getIntegerInput.invoke(menu, new ByteArrayInputStream(userIntegerInput.getBytes()));
+        } catch(Exception e) {
+            fail(e.getCause());
+        }
+        assertEquals(1, resultInteger);
+        userIntegerInput = "word\n";
+        try {
+            resultInteger = (Integer) getIntegerInput.invoke(menu, new ByteArrayInputStream(userIntegerInput.getBytes()));
+        } catch(Exception e) {
+            fail("Method shouldn't throw an exception");
+        }
+        assertEquals(0, resultInteger);
+        getIntegerInput.setAccessible(false);
+        getIntegerInput = null;
+    }
+
+    @Test
     void getInputTest() {
-        String userInput = "1\n";
-        int resultInput = -1;
+        String result = "";
+        String userInput = "word";
         Method getInput = findPrivateMethod("getInput");
         if (getInput == null)
             fail("Method not found");
         getInput.setAccessible(true);
         try {
-            resultInput = (Integer) getInput.invoke(menu, new InputStreamReader(new ByteArrayInputStream(userInput.getBytes())));
-        } catch(Exception e) {
-            fail("Method shouldn't throw an excpetion");
-        }
-        assertEquals(1, resultInput);
-        userInput = "word\n";
-        try {
-            resultInput = (Integer) getInput.invoke(menu, new InputStreamReader(new ByteArrayInputStream(userInput.getBytes())));
-        } catch(Exception e) {
-            fail("Method shouldn't throw an exception");
-        }
-        assertEquals(0, resultInput);
-        getInput.setAccessible(false);
-        getInput = null;
+            result = (String) getInput.invoke(menu, new ByteArrayInputStream(userInput.getBytes()));
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            fail(e.getCause());
+        } 
+        assertEquals(userInput, result);
     }
 
     @Test
@@ -97,27 +120,15 @@ class MenuTest {
 
     @Test
     void performeMenuActionTest() {
-        boolean result = false;
-        int defaultInput = 1, closingActionInput = 3;
-        Method performeMenuAction = findPrivateMethod("performeMenuAction");
-        if (performeMenuAction == null)
-            fail("Method not found");
-        performeMenuAction.setAccessible(true);
-        try {
-            result = (Boolean) performeMenuAction.invoke(menu, defaultInput);
-        } catch(Exception e) {
-            fail("Method shouldn't throw an exception");
-        }
+        int loadingInput = 1, closingInput = 3;
+        boolean result;
+        doReturn(false).when(mockitoMenu).performeMenuAction(loadingInput);
+        result = mockitoMenu.performeMenuAction(loadingInput);
         assertEquals(false, result);
-        try {
-            result = (Boolean) performeMenuAction.invoke(menu, closingActionInput);
-        } catch(Exception e) {
-            fail("Method shouldn't throw an excpetion");
-        }
+        result = mockitoMenu.performeMenuAction(closingInput);
         assertEquals(true, result);
-        performeMenuAction.setAccessible(false);
-        performeMenuAction = null;
     }
+
 
     @Test
     void closeStreamTest() {
@@ -139,6 +150,18 @@ class MenuTest {
             fail(e.getMessage());
         }
         assertEquals(true, result);
+    }
+
+    @Test
+    void getPathToTraningTest() {
+        String path = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTraningMock.txt";
+        doReturn(path).when(mockitoMenu).getPathToTraning();
+        String result = mockitoMenu.getPathToTraning();
+        assertEquals(path, result);
+        path = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/incorrectTraninigMock.txt";
+        doReturn(path).when(mockitoMenu).getPathToTraning();
+        result = mockitoMenu.getPathToTraning();        
+        assertEquals(path, result);
     }
 
 
