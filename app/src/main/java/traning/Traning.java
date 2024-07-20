@@ -9,7 +9,9 @@ import java.io.*;
 public class Traning implements TraningManagment{
     private static final String INCORECT_INPUT_TEMPLET = "%s has been set to %d, because the value read from file was inapproprited or too big.\n", 
                                 CORRECT_INPUT_VALUE = "",
-                                EXTRACT_TRANING_ERROR_MESSAGE = "During extracting the data from a file ocuread an error, operation couldn't been finished";  
+                                EXTRACT_TRANING_ERROR_MESSAGE = "During extracting the data from a file ocuread an error, operation couldn't been finished\n",  
+                                LOADING_FAIL = "TRANING LOADING FAILED\n",
+                                LOADING_SUCCESS = "TRANING LOADING SUCCESSFULL\n";
     private static final byte DEFAULT_SERIES_NUMBER = 1, DEFAULT_EXERCISES_NUMBER = 1;
     private static final long DEFAULT_SERIES_REST_TIME = 60;
     private static final int DEFAULT_EXERCISES_REST_TIME = 15;
@@ -22,16 +24,16 @@ public class Traning implements TraningManagment{
     private List<Exercise> exercises = null;   
 
     @Override
-    public boolean loadTraning(String path) {
+    public String loadTraning(String path) {
         FileInputStream traningSchedule = openTraningFile(path);
         if (traningSchedule == null) 
-            return false;
-        String extractionResult = extractTraninig(traningSchedule);  
-        if (extractionResult.equals(EXTRACT_TRANING_ERROR_MESSAGE))
-            return false;
+            return LOADING_FAIL;
+        String extractionResult = extractTraninig(traningSchedule);
+       if (extractionResult.equals(EXTRACT_TRANING_ERROR_MESSAGE))
+            return EXTRACT_TRANING_ERROR_MESSAGE + LOADING_FAIL;
         else if(!extractionResult.equals(""))
             System.out.println(extractionResult);
-        return true;
+        return LOADING_SUCCESS;
     }
 
     @Override
