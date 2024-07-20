@@ -120,4 +120,21 @@ public final class Menu {
         }
     }
 
+    /**
+     *  Method clears terminal from containing data
+     */
+    private void clearTerminal() {
+        try {
+            if (System.getProperty("os.name").contains("Windows"))
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start();
+            else {
+                System.out.println("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (final IOException exception) {
+            System.out.println("Error during clearing terminal");
+        }
+
+    }
+
 }
