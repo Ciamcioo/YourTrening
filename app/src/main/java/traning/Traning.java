@@ -8,7 +8,8 @@ public class Traning implements TraningManagment{
                                 CORRECT_INPUT_VALUE = "",
                                 EXTRACT_TRANING_ERROR_MESSAGE = "During extracting the data from a file ocuread an error, operation couldn't been finished\n",  
                                 LOADING_FAIL = "TRANING LOADING FAILED\n",
-                                LOADING_SUCCESS = "TRANING LOADING SUCCESSFULL\n";
+                                LOADING_SUCCESS = "TRANING LOADING SUCCESSFULL\n",
+                                PROCESSING_TRANING_ERROR_MESSAGE = "Error during processing traning";
     private static final byte DEFAULT_SERIES_NUMBER = 1, DEFAULT_EXERCISES_NUMBER = 1;
     private static final long DEFAULT_SERIES_REST_TIME = 60;
     private static final int DEFAULT_EXERCISES_REST_TIME = 15;
@@ -35,7 +36,12 @@ public class Traning implements TraningManagment{
 
     @Override
     public void procesTraining() {
-        // TODO write the implementation of the method
+        for (int series_iteration = 1; series_iteration <= series; series_iteration++) {
+            System.out.println("Series number: " + series_iteration);
+            System.out.println("Series starts in 15 seconds...");
+            timeCountersTerminator(timeCounter(10));
+            timeCountersTerminator(printingTimeCounter(5)); 
+        }
     }
 
     /**
@@ -99,6 +105,45 @@ public class Traning implements TraningManagment{
             exercises.clear();
             exercises = new ArrayList<Exercise>();
         }
+    }
+
+    /**
+     * Method counts down provided number of seconds 
+     * @param seconds time to count down 
+     * @return method returns true if there were no exception, in case of exception methods returns false  
+     */
+    private boolean timeCounter(long seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+            return true;
+        } catch (InterruptedException e) {
+            return false;
+        }
+    }
+
+    /**
+     *  Method counts down seconds with printing remaning time on to the default output stream 
+     * @param seconds time to count down
+     * @return method returns true if there weren't exception, in other case funcion reutrn false
+     */
+    private boolean printingTimeCounter(long seconds) {
+        for (long i = seconds; 0 < i; i--) {
+            System.out.println(i);
+            if (!timeCounter(1))
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * Method checks results of counters. In case of counter working incorectly timer throws RunTimeException terminating the traning processing.  
+     * @param counterResult result of counter method
+     */
+    private void timeCountersTerminator(boolean counterResult) {
+       if (counterResult)
+        return;
+       else
+        throw new RuntimeException(PROCESSING_TRANING_ERROR_MESSAGE); 
     }
 
 // SETTERS

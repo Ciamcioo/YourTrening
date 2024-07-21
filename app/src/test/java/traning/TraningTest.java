@@ -133,6 +133,62 @@ public class TraningTest {
     } 
 
     @Test
+    public void timeCounterTest() {
+        boolean functionResult = false;
+        long timeToPass = 5, systemTimeDifference = 0;
+        Method timeCounter = findPrivateMethod("timeCounter");
+        if (timeCounter == null)
+            fail("Method not found");
+        timeCounter.setAccessible(true);
+        try {
+            long startSystemTime = System.currentTimeMillis();
+            functionResult = (Boolean) timeCounter.invoke(traning, timeToPass);
+            systemTimeDifference = System.currentTimeMillis() - startSystemTime;
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            fail(e.getCause());
+        }
+        assertEquals(true, functionResult);
+        assertEquals(timeToPass * 1000, systemTimeDifference);
+    }
+
+    @Test
+    public void printingTimeCounter() {
+        boolean functionResult = false;
+        long timeToPass = 5, systemTimeDifference = 0;
+        Method printingTimeCounter = findPrivateMethod("printingTimeCounter"); 
+        if (printingTimeCounter == null)
+            fail("Method not found");
+        printingTimeCounter.setAccessible(true);
+        try {
+            long startSystemTime = System.currentTimeMillis() + 1;
+            functionResult = (Boolean) printingTimeCounter.invoke(traning, timeToPass);
+            systemTimeDifference = System.currentTimeMillis() - startSystemTime;
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            fail(e.getCause());
+        }
+        assertEquals(timeToPass * 1000, systemTimeDifference);
+        assertTrue(functionResult);
+    }
+
+    @Test
+    public void timeCountersTerminatorTest() {
+        boolean methodCompleted = false;
+        Method timeCountersTerminator = findPrivateMethod("timeCountersTerminator");
+        if (timeCountersTerminator == null)
+            fail("Method not found");
+        timeCountersTerminator.setAccessible(true);
+        try {
+            timeCountersTerminator.invoke(traning, true);
+            methodCompleted = true;
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            fail(e.getCause());
+        }  
+        assertTrue(methodCompleted);
+        assertThrows(InvocationTargetException.class, () -> timeCountersTerminator.invoke(traning, false));
+    }
+
+
+    @Test
     public void setSeriesTest() {
         String result = CORRECT_RESULT; 
         variableName = "Series number";
