@@ -64,6 +64,17 @@ public class Traning implements TraningManagment{
         System.out.println("TRANING ENDED");
     }
 
+    @Override
+    public boolean checkIfTraningIsLoaded() {
+        if (series <= 0 || restTimeBetweenExercises <= 0 || restTimeBetweenSets <= 0 || exercisesNumber <= 0)
+            return false;
+        if (exercises == null)
+            return false;
+        if (exercisesNumber != exercises.size())
+            return false;
+        return true;
+    }
+
     /**
      * Method tries to open new stream to the file which path is provided as an argument.
      * If the operation is unsucesfull method returns null pointer.  

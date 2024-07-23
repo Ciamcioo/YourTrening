@@ -36,8 +36,10 @@ public class TraningTest {
     }
 
     @Test
-    void processTraningTest() {
-
+    public void checkIfTraningIsLoadedTest() {
+        assertFalse(traning.checkIfTraningIsLoaded());
+        traning.loadTraning(PATH_TO_CORRECT_TRANING);
+        assertTrue(traning.checkIfTraningIsLoaded());
     }
 
     @Test

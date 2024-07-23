@@ -8,5 +8,8 @@ public interface TraningManagment {
      */
     public String loadTraning(String pathToTraningFile);
 
+    // TODO missing documentation
     public void procesTraining();  
+    // TODO misisng documanatation
+    public boolean checkIfTraningIsLoaded();
 }
