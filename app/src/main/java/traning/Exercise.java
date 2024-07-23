@@ -50,7 +50,7 @@ class Exercise {
 // SETTERS
     /**
      * Name variable exercise setter for exerciese object. If the vlaue passed as an argument is not empty the exercise's name is set.
-     * @param name exercise name provided by the user 
+     * @param name arguemnt containing exercise name provided by the user 
      */
     protected void setName(String name) {
         if (!name.equals(""))
@@ -61,7 +61,7 @@ class Exercise {
 
     /**
      * Execution time variable setter for exerciese object. If the argument is within the range of zero to Integer max then the execution time is set.  
-     * @param executionTime execution time provided by the user 
+     * @param executionTime arguemnt containing execution time provided by the user 
      */
     protected void setExecutionTime(long executionTime) {
         if (executionTime < Integer.MAX_VALUE && executionTime > 0)
@@ -69,8 +69,13 @@ class Exercise {
         else 
             this.executionTime = DEFAULT_EXECUTION_TIME;
     }
+
+    /**
+     * Exercise description setter for exercisese object. If the arguemnt is empty, the description will be set to default value. In other case the description is set to the value of argument.  
+     * @param description argument describing the exercise provided as an arguemnt
+     */
     protected void setDescription(String description) {
-        if (!description.equals("")) 
+        if (!description.equals("") || description == null)  
             this.description = description;
         else
             this.description = DEFAULT_DESCRIPTION;

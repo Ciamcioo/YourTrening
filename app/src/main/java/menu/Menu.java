@@ -23,6 +23,9 @@ public final class Menu {
         return instance;
     }
 
+    /**
+     * Private constructor used when new instance of menu class is created
+     */
     private Menu() {
         traning = new Traning();
     }
@@ -75,7 +78,6 @@ public final class Menu {
     }
 
 
-    // TODO make sure that test do not file after closing stream
     /**
      * Method reads input from the stream which is provided as an arguemnt. 
      * @param stream input stream which is source of input
@@ -103,7 +105,11 @@ public final class Menu {
         return false;
     }
 
-    // TODO documenatation missing
+    /**
+     * Method takes action on training object based on the input provided as an argument. 
+     * @param input integer representing the action that will be taken on training objet
+     * @return method returns true when performing an action on specified traing object needs to be stoped. In other case function returns false.
+     */
     boolean performeMenuAction(int input) {
         switch(input) {
             case 1 -> { 

@@ -8,8 +8,15 @@ public interface TraningManagment {
      */
     public String loadTraning(String pathToTraningFile);
 
-    // TODO missing documentation
+    /**
+     * Method processing training. Training is processed by using data contained in training object.  
+     */
     public void procesTraining();  
-    // TODO misisng documanatation
+
+    
+    /**
+     * Method checks if training was loaded by checking correctnes of its data. Auxiliary method protecting the procesTraining method before unexpected before which would happen if training wouldn't be loaded.  
+     * @return method returns true if traning is loaded to the memory. In other case method returns false.
+     */
     public boolean checkIfTraningIsLoaded();
 }

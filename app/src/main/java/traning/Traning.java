@@ -129,6 +129,9 @@ public class Traning implements TraningManagment{
         }
     }
 
+    /**
+     * Method manages the ArrayList object containg exercises if the object is null new 'list' is created, in other case the old one is cleared
+     */
     private void manageExercisesList() {
         if (exercises == null)
             exercises = new ArrayList<Exercise>();
