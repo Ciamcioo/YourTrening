@@ -1,18 +1,25 @@
 # YourTraining
 ## Description
-YourTraining is simple application which is supposed to help you with your indoor traning. Allows you to load your training into the app and keep track of current exercise during training. Application monitor series, rest time between series, exercise type, exercise time exectuion time and rest time bewteen exercises.  
+YourTraining is simple application which is supposed to help you with your indoor traning. Allows you to load your training into the app and keep track of current exercise and remaing time during training. Application monitor series, rest time between series, exercise type, exercise time exectuion time and rest time bewteen exercises.  
 
 ## Futures
+- Java SE version 8+
 - Gradle build tool
 - JUnit tests 
+- Makefile
 
 ## Instalation
 1. Clone the repositor ````git clone https://github.com/Ciamcioo/YourTrening ````
 2. Navigate to the project directory ````cd YourTraining````
-3. Build the project ````./gradlew build````
+3. Build the project using gradle  ````./gradlew build```` or Makefile ````make build```` 
 
 ## Usage
-1. Run the project ````./gradlew run````
+### Running the application
+- using Makefile 
+> ````make run````
+- using Java 
+> 1. Navigate to libs directory ``cd app/build/libs``
+> 2. Run the program ``java -jar app.jar``
 
 ## Contributing
 1. Fork the repository.
