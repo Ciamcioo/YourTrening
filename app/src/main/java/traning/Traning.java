@@ -257,7 +257,6 @@ public class Traning implements TraningManagment{
     private String setRestTimeBetweenExercises(String restTimeExercises) {
         variableName = "Rest time between exercises";
         long restTimeExercisesSec = convertStringToLong(restTimeExercises); 
-        System.out.println(restTimeExercisesSec);
         if (restTimeExercisesSec >= Integer.MAX_VALUE) {
             this.restTimeBetweenExercises = Integer.MAX_VALUE; 
             return String.format(INCORECT_INPUT_TEMPLET, variableName, Integer.MAX_VALUE);

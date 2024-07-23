@@ -74,6 +74,8 @@ public final class Menu {
         }
     }
 
+
+    // TODO make sure that test do not file after closing stream
     /**
      * Method reads input from the stream which is provided as an arguemnt. 
      * @param stream input stream which is source of input
@@ -81,14 +83,12 @@ public final class Menu {
      */
     private String getInput(InputStream stream) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream)); 
-        System.out.println("> ");
+        System.out.print("> ");
         try {
             return reader.readLine();
         } catch (IOException e) {
             return null;
-        } finally {
-            closeStream(reader);
-        }
+        } 
     }
 
     /**
@@ -103,12 +103,12 @@ public final class Menu {
         return false;
     }
 
+    // TODO documenatation missing
     boolean performeMenuAction(int input) {
         switch(input) {
             case 1 -> { 
-                clearTerminal();
                 String path = getPathToTraning(); 
-                System.out.println(traning.loadTraning(path));
+                System.out.print(traning.loadTraning(path));
                 return false; 
             }
             case 2 -> { 
@@ -142,7 +142,7 @@ public final class Menu {
      * @return method returns the path to traning file
      */
     String getPathToTraning() {
-        System.out.println(PATH_LOAD_CONTECST);
+        System.out.print(PATH_LOAD_CONTECST);
         String path = getInput(inputStream);
         return path;
     }
