@@ -141,7 +141,7 @@ public final class Menu {
     /**
      *  Method clears terminal from containing data
      */
-    private void clearTerminal() {
+    public static void clearTerminal() {
         try {
             if (System.getProperty("os.name").contains("Windows"))
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start();
@@ -153,6 +153,18 @@ public final class Menu {
             System.out.println("Error during clearing terminal");
         }
 
+    }
+
+    /**
+     * Method waits for any key press
+     */
+    public static void getKeyPress() {
+        System.out.println("Press any key...");
+        try {
+            System.in.read();
+        } catch(IOException e) {
+            return;
+        }
     }
 
 }
