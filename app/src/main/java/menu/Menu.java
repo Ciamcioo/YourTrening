@@ -23,6 +23,10 @@ public final class Menu {
         return instance;
     }
 
+    private Menu() {
+        traning = new Traning();
+    }
+
     /**
      * Method handling running process for the menu, which containes a several methods providing sets of action to properly handle processing of the application. 
      */
@@ -106,7 +110,10 @@ public final class Menu {
                 return false; 
             }
             case 2 -> { 
-                
+                if (!traning.checkIfTraningIsLoaded()) 
+                    System.out.println("Traning is not loaded. Firstly load traning");
+                else
+                    traning.procesTraining();
                 return false;
             } 
             case 3 -> { return true; }

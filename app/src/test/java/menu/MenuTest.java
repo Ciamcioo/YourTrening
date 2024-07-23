@@ -120,11 +120,13 @@ class MenuTest {
 
     @Test
     void performeMenuActionTest() {
-        int loadingInput = 1, closingInput = 3;
+        int loadingInput = 1, processingInput = 2,  closingInput = 3;
         boolean result;
         doReturn(false).when(mockitoMenu).performeMenuAction(loadingInput);
         result = mockitoMenu.performeMenuAction(loadingInput);
         assertEquals(false, result);
+        result = mockitoMenu.performeMenuAction(processingInput);
+        assertFalse(result);
         result = mockitoMenu.performeMenuAction(closingInput);
         assertEquals(true, result);
     }

@@ -1,6 +1,7 @@
 package traning;
 
 import java.util.*;
+import menu.Menu;
 import java.io.*;
 
 public class Traning implements TraningManagment{
@@ -30,18 +31,37 @@ public class Traning implements TraningManagment{
        if (extractionResult.equals(EXTRACT_TRANING_ERROR_MESSAGE))
             return EXTRACT_TRANING_ERROR_MESSAGE + LOADING_FAIL;
         else if(!extractionResult.equals(""))
-            System.out.println(extractionResult);
+            System.out.print(extractionResult);
         return LOADING_SUCCESS;
     }
 
     @Override
     public void procesTraining() {
+        if (!checkIfTraningIsLoaded())  
+            return;
+        System.out.println("TRANING STARTED");
+        System.out.println("Traning will start in 15 seconds...");
+        timeCountersTerminator(timeCounter(10));
+        timeCountersTerminator(printingTimeCounter(5)); 
+        Menu.clearTerminal();
         for (int series_iteration = 1; series_iteration <= series; series_iteration++) {
             System.out.println("Series number: " + series_iteration);
-            System.out.println("Series starts in 15 seconds...");
-            timeCountersTerminator(timeCounter(10));
-            timeCountersTerminator(printingTimeCounter(5)); 
+            for (Exercise exercise : exercises) {
+                System.out.println(exercise.getName()); 
+                System.out.println(exercise.getDescription());
+                timeCountersTerminator(timeCounter(5));
+                System.out.println("Exercise " + exercise.getName() + " starts");
+                timeCountersTerminator(printingTimeCounter(exercise.getExecutionTime()));
+                Menu.clearTerminal();
+                System.out.println("Exercise " + exercise.getName() + " ends. Get rest");
+                timeCountersTerminator(printingTimeCounter(restTimeBetweenExercises));
+                Menu.clearTerminal();
+            }
+            System.out.println("Series ends. Get rest.");
+            timeCountersTerminator(printingTimeCounter(restTimeBetweenSets));
+            Menu.clearTerminal();
         }
+        System.out.println("TRANING ENDED");
     }
 
     /**
