@@ -11,15 +11,19 @@ YourTraining is simple application which is supposed to help you with your indoo
 ## Instalation
 1. Clone the repositor ````git clone https://github.com/Ciamcioo/YourTrening ````
 2. Navigate to the project directory ````cd YourTraining````
-3. Build the project using gradle  ````./gradlew build```` or Makefile ````make build```` 
+3. Build the project using: gradle  ````./gradlew build```` or Makefile ````make build```` 
 
 ## Usage
-### Running the application
+### Running application
 - using Makefile 
-> ````make run````
+> 1. Navigate to project directory `cd YourTraning`
+> 2. Run the project ````make run````
 - using Java 
 > 1. Navigate to libs directory ``cd app/build/libs``
 > 2. Run the program ``java -jar app.jar``
+
+### Running application tests 
+Unit tests of application could be run using gradle direclty `./gradlew test` or with Makefile `make test`.
 
 ## Contributing
 1. Fork the repository.
