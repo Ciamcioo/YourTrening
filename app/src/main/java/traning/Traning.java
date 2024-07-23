@@ -135,10 +135,9 @@ public class Traning implements TraningManagment{
     private void manageExercisesList() {
         if (exercises == null)
             exercises = new ArrayList<Exercise>();
-        else {
+        else 
             exercises.clear();
-            exercises = new ArrayList<Exercise>();
-        }
+        
     }
 
     /**

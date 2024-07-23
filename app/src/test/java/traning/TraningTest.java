@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.io.*;
+import java.util.*;
 
 public class TraningTest {
     private static final String INCORRECT_STR_INPUT = "word", CORRECT_STR_INPUT = String.valueOf(2),
@@ -132,6 +133,13 @@ public class TraningTest {
             fail(e.getCause());
         }
         assertNotNull(traning.getExercisesList());
+        List<Exercise> previousExerciseTraning = traning.getExercisesList();
+        try {
+            manageExercise.invoke(traning);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            fail(e.getCause());
+        }
+        assertEquals(previousExerciseTraning, traning.getExercisesList());
     } 
 
     @Test
