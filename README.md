@@ -16,11 +16,11 @@ YourTraining is a simple application designed to help you with your indoor train
 ## Usage
 ### Running application
 - using Makefile 
-> 1. Navigate to project directory `cd YourTraining`
-> 2. Run the project ````make run````
+1. Navigate to project directory `cd YourTraining`
+2. Run the project ````make run````
 - using Java 
-> 1. Navigate to libs directory ``cd app/build/libs``
-> 2. Run the program ``java -jar app.jar``
+1. Navigate to libs directory ``cd app/build/libs``
+2. Run the program ``java -jar app.jar``
 
 ### Running application tests 
 Unit tests of application could be run using gradle directly `./gradlew test` or with Makefile `make test`.
