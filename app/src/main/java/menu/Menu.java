@@ -33,13 +33,15 @@ public final class Menu {
     public void menuRunner() {
         int input = -1; 
         boolean shouldStop = false;
-        
+
         do {
-            System.out.println(MENU_CONTECST);
+            System.out.print(MENU_CONTECST);
             input = handleInput(inputStream); 
             shouldStop = performeMenuAction(input);
-
-        } while(shouldStop);
+            getKeyPress();
+            clearTerminal();
+        } while(!shouldStop);
+        closeStream(inputStream);
     }
 
     /**
