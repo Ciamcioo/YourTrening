@@ -12,7 +12,7 @@ import java.util.*;
 
 class MenuTest {
     private static Menu menu = Menu.getInstance();
-    private static Menu mockitoMenu = Mockito.spy(new Menu());
+    private static Menu mockitoMenu = Mockito.spy(menu);
     private static final Method[] privMethods = Menu.class.getDeclaredMethods();
 
     @Test 
@@ -20,11 +20,6 @@ class MenuTest {
         assertNotNull(menu);
         Menu testMenu = Menu.getInstance(); 
         assertEquals(menu, testMenu);
-    }
-
-    @Test
-    void menuRunnerTest() {
-
     }
 
     @Test

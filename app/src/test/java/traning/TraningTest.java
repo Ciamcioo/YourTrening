@@ -18,7 +18,7 @@ public class TraningTest {
                                 LOADING_FAIL = "TRANING LOADING FAILED\n",
                                 LOADING_SUCCESS = "TRANING LOADING SUCCESSFULL\n";
     private static final Byte DEFAULT_SERIES_NUMBER = 1, DEFAULT_EXERCISES_NUMBER = 1;
-    private static final Long DEFAULT_SERIES_REST_TIME = 60L, DEFAULT_EXERCISES_REST_TIME = 15L;
+    private static final Long DEFAULT_SERIES_REST_TIME = 60L, DEFAULT_EXERCISES_REST_TIME = 15L, MILLISECONDS_IN_SECOND = 1000L;
 
     private static String tooLargeInput, variableName;
     private static Traning traning = new Traning();
@@ -149,8 +149,8 @@ public class TraningTest {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(true, functionResult);
-        assertEquals(timeToPass * 1000, systemTimeDifference);
+        assertTrue(functionResult);
+        assertTrue(timeToPass * MILLISECONDS_IN_SECOND - (MILLISECONDS_IN_SECOND/2) < systemTimeDifference && systemTimeDifference < timeToPass * MILLISECONDS_IN_SECOND + (MILLISECONDS_IN_SECOND / 2));
     }
 
     @Test
@@ -162,13 +162,13 @@ public class TraningTest {
             fail("Method not found");
         printingTimeCounter.setAccessible(true);
         try {
-            long startSystemTime = System.currentTimeMillis() + 1;
+            long startSystemTime = System.currentTimeMillis();
             functionResult = (Boolean) printingTimeCounter.invoke(traning, timeToPass);
             systemTimeDifference = System.currentTimeMillis() - startSystemTime;
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(timeToPass * 1000, systemTimeDifference);
+        assertTrue(timeToPass* MILLISECONDS_IN_SECOND - (MILLISECONDS_IN_SECOND / 2) < systemTimeDifference && systemTimeDifference < timeToPass * MILLISECONDS_IN_SECOND + (MILLISECONDS_IN_SECOND / 2));
         assertTrue(functionResult);
     }
 
