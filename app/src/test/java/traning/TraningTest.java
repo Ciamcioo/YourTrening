@@ -19,7 +19,6 @@ public class TraningTest {
                                                    "Rest time between exercises has been set to 2147483647, because the value read from file was inapproprited or too big.\n",
                                 LOADING_FAIL = "TRANING LOADING FAILED\n",
                                 LOADING_SUCCESS = "TRANING LOADING SUCCESSFULL\n";
-    // private static final Path PATH_TO_CORRECT_TRANING = Paths.get("..", "..", "resources", "path", "correctTrainingMock.txt"); 
     private static final Byte DEFAULT_SERIES_NUMBER = 1, DEFAULT_EXERCISES_NUMBER = 1;
     private static final Long DEFAULT_SERIES_REST_TIME = 60L, DEFAULT_EXERCISES_REST_TIME = 15L, MILLISECONDS_IN_SECOND = 1000L;
 
@@ -102,6 +101,7 @@ public class TraningTest {
             fail(e.getCause());
         }
         assertEquals(INCORRECT_RESULT, result);
+
         extractTraning.setAccessible(false);
         extractTraning = null;
     }
@@ -127,6 +127,7 @@ public class TraningTest {
             fail(e.getCause());
         }
         assertEquals(-1, result);
+
         convertMethod.setAccessible(false);
         convertMethod = null;
     }
@@ -150,6 +151,9 @@ public class TraningTest {
             fail(e.getCause());
         }
         assertEquals(previousExerciseTraning, traning.getExercisesList());
+
+        manageExercise.setAccessible(false);
+        manageExercise = null;
     } 
 
     @Test
@@ -169,6 +173,9 @@ public class TraningTest {
         }
         assertTrue(functionResult);
         assertTrue(timeToPass * MILLISECONDS_IN_SECOND - (MILLISECONDS_IN_SECOND/2) < systemTimeDifference && systemTimeDifference < timeToPass * MILLISECONDS_IN_SECOND + (MILLISECONDS_IN_SECOND / 2));
+
+        timeCounter.setAccessible(false);
+        timeCounter = null;
     }
 
     @Test
@@ -188,6 +195,9 @@ public class TraningTest {
         }
         assertTrue(timeToPass* MILLISECONDS_IN_SECOND - (MILLISECONDS_IN_SECOND / 2) < systemTimeDifference && systemTimeDifference < timeToPass * MILLISECONDS_IN_SECOND + (MILLISECONDS_IN_SECOND / 2));
         assertTrue(functionResult);
+
+        printingTimeCounter.setAccessible(false);
+        printingTimeCounter = null;
     }
 
     @Test
@@ -205,6 +215,8 @@ public class TraningTest {
         }  
         assertTrue(methodCompleted);
         assertThrows(InvocationTargetException.class, () -> timeCountersTerminator.invoke(traning, false));
+
+        timeCountersTerminator.setAccessible(false);
     }
 
 
@@ -236,6 +248,7 @@ public class TraningTest {
             fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Byte.MAX_VALUE), result);
+
         setSeries.setAccessible(false);
         setSeries = null;
     }
@@ -270,6 +283,9 @@ public class TraningTest {
             fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Long.MAX_VALUE), result);
+
+        setRestTimeBetweenSeries.setAccessible(false);
+        setRestTimeBetweenSeries = null;
     }
 
     @Test
@@ -303,6 +319,9 @@ public class TraningTest {
             fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Byte.MAX_VALUE), result);
+
+        setExercisesNumber.setAccessible(false);
+        setExercisesNumber = null;
     }
 
     @Test
@@ -336,6 +355,9 @@ public class TraningTest {
             fail(e.getCause());
         }
         assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Integer.MAX_VALUE), result);
+
+        setRestTimeExercises.setAccessible(false);
+        setRestTimeExercises = null;
     }
 
     @Test
@@ -357,7 +379,10 @@ public class TraningTest {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(true, result);
+        assertTrue(result);
+
+        closeStream.setAccessible(false);
+        closeStream = null;
     }
 
     @Test
@@ -381,6 +406,9 @@ public class TraningTest {
             fail(e.getCause());
         }
         assertNull(resultPath);
+
+        generatePath.setAccessible(false);
+        generatePath = null;
     }
 
 

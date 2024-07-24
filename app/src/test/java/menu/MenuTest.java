@@ -43,6 +43,7 @@ class MenuTest {
             fail("Method shouldn't throw an exception");
         }
         assertEquals(-1, resultInput);
+
         handleInput.setAccessible(false);
         handleInput = null;
     }
@@ -68,6 +69,7 @@ class MenuTest {
             fail("Method shouldn't throw an exception");
         }
         assertEquals(0, resultInteger);
+
         getIntegerInput.setAccessible(false);
         getIntegerInput = null;
     }
@@ -86,6 +88,9 @@ class MenuTest {
             fail(e.getCause());
         } 
         assertEquals(userInput, result);
+
+        getInput.setAccessible(false);
+        getInput = null;
     }
 
     @Test
@@ -105,10 +110,11 @@ class MenuTest {
             fail("Method shouldn't throw an expception");      
         }
 
-        assertEquals(true, validationResults.get(0));
-        assertEquals(false, validationResults.get(1));
-        assertEquals(false, validationResults.get(2));
-        assertEquals(false, validationResults.get(3));
+        assertTrue(validationResults.get(0));
+        assertFalse(validationResults.get(1));
+        assertFalse(validationResults.get(2));
+        assertFalse(validationResults.get(3));
+
         validateInput.setAccessible(false);
         validateInput = null;
     }
@@ -119,11 +125,11 @@ class MenuTest {
         boolean result;
         doReturn(false).when(mockitoMenu).performeMenuAction(loadingInput);
         result = mockitoMenu.performeMenuAction(loadingInput);
-        assertEquals(false, result);
+        assertFalse(result);
         result = mockitoMenu.performeMenuAction(processingInput);
         assertFalse(result);
         result = mockitoMenu.performeMenuAction(closingInput);
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
 
@@ -146,7 +152,10 @@ class MenuTest {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(true, result);
+        assertTrue(result);
+
+        closeStream.setAccessible(false);
+        closeStream = null;
     }
 
     @Test

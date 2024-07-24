@@ -12,6 +12,7 @@ class ExerciseTest {
     private static final String correctExerciseMock = "Exercises1,30,It is a description of first exercises.";
     private Exercise exercise = new Exercise(correctExerciseMock);
     Method[] exerciseMethods = Exercise.class.getDeclaredMethods(); 
+
     @Test
     void constructorFromDataLineFetchTest() {
         String  resultName = "", resultDescription = "";
@@ -81,6 +82,9 @@ class ExerciseTest {
         assertEquals(exerciseSplited[0], resultName);
         assertEquals("45", String.valueOf(resultExecutionTime));
         assertEquals("Lack of description", resultDescription);
+
+        getName.setAccessible(false);
+        getName = null;
     }
 
     @Test
@@ -132,6 +136,9 @@ class ExerciseTest {
         }
         assertEquals(0, resultSize);
         assertEquals(EXERCISE_INFORMATION_IN_LINE, exerciseData.size()); 
+
+        fillExercisesInfromation.setAccessible(false);
+        fillExercisesInfromation = null;
     } 
 
     Method findMethod(String methodName) {
