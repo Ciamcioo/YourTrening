@@ -3,6 +3,7 @@ package traning;
 import java.util.*;
 import menu.Menu;
 import java.io.*;
+import java.nio.file.*;
 
 public class Traning implements TraningManagment{
     private static final String INCORECT_INPUT_TEMPLET = "%s has been set to %d, because the value read from file was inapproprited or too big.\n", 
@@ -23,8 +24,11 @@ public class Traning implements TraningManagment{
     private List<Exercise> exercises = null;   
 
     @Override
-    public String loadTraning(String path) {
-        FileInputStream traningSchedule = openTraningFile(path);
+    public String loadTraning(String pathStr) {
+        Path path = generatePath(pathStr);
+        if (path == null)
+            return LOADING_FAIL;
+        FileInputStream traningSchedule = openTrainingFileStream(path);
         if (traningSchedule == null) 
             return LOADING_FAIL;
         String extractionResult = extractTraninig(traningSchedule);
@@ -81,9 +85,9 @@ public class Traning implements TraningManagment{
      * @param path path to the file provided in String object 
      * @return in case of success referenc to newly created stream, in other case null pointer 
      */
-    private FileInputStream openTraningFile(String path) {
+    private FileInputStream openTrainingFileStream(Path trainingPath) {
         try {
-            return new FileInputStream(path);
+            return new FileInputStream(trainingPath.toFile());
         } catch(Exception e) {
             return null;
         }
@@ -177,6 +181,19 @@ public class Traning implements TraningManagment{
         return;
        else
         throw new RuntimeException(PROCESSING_TRANING_ERROR_MESSAGE); 
+    }
+
+    /**
+     * Method generates Path object based on the string passed as an arguemtn. If the string cannot be converted to Path object null is returned. 
+     * @param pathStr String object representing path to a file
+     * @return method returns the Path object based on the String arguemnt. If the string cannot be converted to Path method returns null.
+     */
+    private Path generatePath(String pathStr) {
+        try {
+            return Paths.get(pathStr);
+        } catch(InvalidPathException e) {
+            return null;
+        }
     }
 
 // SETTERS
