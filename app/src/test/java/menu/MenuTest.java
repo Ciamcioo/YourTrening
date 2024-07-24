@@ -143,7 +143,7 @@ class MenuTest {
             fail("Method not found");
         closeStream.setAccessible(true);
         try {
-            reader = new BufferedReader(new FileReader("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTraningMock.txt"));
+            reader = new BufferedReader(new FileReader("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTrainingMock.txt"));
         } catch(Exception e) {
             fail(e.getCause());
         }

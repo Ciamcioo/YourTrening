@@ -43,3 +43,4 @@ tasks.jar {
         attributes("Main-Class" to "yourtraining.App")
     }
 }
+
