@@ -7,5 +7,9 @@ build
 # Ignore VS code folder
 .vscode
 
+# Ignore Intelij IDE folder
+.idea
+
 # Ignore other build outp direcotry
 bin
+
