@@ -3,6 +3,10 @@ package menu;
 import java.io.*;
 import traning.Traning;
 
+
+/**
+ * Menu class is responsible for handling mneu actions. Class takes the input from ther user and takes action based on it.
+ */
 public final class Menu {
     private static final String MENU_CONTECST = "------ Your trainign main menu ------\n1. Load training\n2. Start training\n3. Exit application\n",
                                 PATH_LOAD_CONTECST = "Provide absolute path to traning file\n";

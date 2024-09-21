@@ -2,6 +2,9 @@ package traning;
 
 import java.util.*;
 
+/**
+ * Exercise class represent single exercises with data conected with it.
+ */
 class Exercise {
     private static final String DEFAULT_NAME = "None exercise name", DEFAULT_DESCRIPTION = "Lack of description";
     private static final long DEFAULT_EXECUTION_TIME = 45;

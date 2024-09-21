@@ -1,5 +1,8 @@
 package traning;
 
+/**
+ * TraingManagment interface definig the functionality of trenings.
+ */
 public interface TraningManagment {
     /**
      * Method responisble for loading traning units from the source provided as a path. 

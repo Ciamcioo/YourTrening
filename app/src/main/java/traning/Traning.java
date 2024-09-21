@@ -5,6 +5,9 @@ import menu.Menu;
 import java.io.*;
 import java.nio.file.*;
 
+/**
+ * Trening class representing the trening unit. Handling the functionality of training: loading, saving and procesing. 
+ */
 public class Traning implements TraningManagment{
     private static final String INCORECT_INPUT_TEMPLET = "%s has been set to %d, because the value read from file was inapproprited or too big.\n", 
                                 CORRECT_INPUT_VALUE = "",
@@ -22,6 +25,12 @@ public class Traning implements TraningManagment{
     private byte exercisesNumber;
     private int restTimeBetweenExercises; 
     private List<Exercise> exercises = null;   
+
+    /* 
+        public Traning() {
+        
+        }
+    */
 
     @Override
     public String loadTraning(String pathStr) {
@@ -304,6 +313,10 @@ public class Traning implements TraningManagment{
     }
 
 // GETTERS 
+    /**
+     * Getter of List containing the exercises of a traning unit.
+     * @return exercises list
+     */
     public List<Exercise> getExercisesList() {
         return exercises;
     }
