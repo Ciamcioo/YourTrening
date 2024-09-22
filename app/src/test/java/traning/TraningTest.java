@@ -2,8 +2,10 @@ package traning;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+
+import net.bytebuddy.dynamic.loading.ByteArrayClassLoader;
+
+import java.lang.reflect.*;
 import java.io.*;
 import java.util.*;
 import java.nio.file.*;
@@ -25,7 +27,24 @@ public class TraningTest {
     private static String tooLargeInput, variableName;
     private static Traning traning = new Traning();
     private static Method[] privMethods = Traning.class.getDeclaredMethods(); 
+    private static Field[] privFields = Traning.class.getDeclaredFields();
 
+    @Test
+    public void constructorDataConsistentTest() {
+        Field field = findPrivateField("series");
+        try {
+            assertEquals(DEFAULT_SERIES_NUMBER.byteValue(), field.getByte(traning));
+            field = findPrivateField("restTimeBetweenSets") ;
+            assertEquals(DEFAULT_SERIES_REST_TIME, field.getLong(traning));
+            field = findPrivateField("exercisesNumber");
+            assertEquals(DEFAULT_EXERCISES_NUMBER, field.getByte(traning));
+            field = findPrivateField("restTimeBetweenExercises");
+            assertEquals(DEFAULT_EXERCISES_REST_TIME, field.getInt(traning));
+        } catch(IllegalAccessException exception) {
+            fail("Illegal Access Excpetion");
+        }
+
+    }
     @Test
     public void loadTraningTest() {
         String pathToTraningSchedule = "empty";
@@ -427,5 +446,16 @@ public class TraningTest {
             return null;
         }
     }
+
+    Field findPrivateField(String fieldName) {
+        for (Field field : privFields) {
+            if (field.getName().equals(fieldName)) {
+                field.setAccessible(true);
+                return field;
+            }
+        }
+        return null;
+    }
+
 
 }
