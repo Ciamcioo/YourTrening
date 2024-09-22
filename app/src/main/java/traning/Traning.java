@@ -26,11 +26,15 @@ public class Traning implements TraningManagment{
     private int restTimeBetweenExercises; 
     private List<Exercise> exercises = null;   
 
-    /* 
-        public Traning() {
-        
-        }
-    */
+    /**
+     * Default consturcotr handling the initalization of object to avoid any secuirty risks. 
+     */
+    public Traning() {
+        this.series = DEFAULT_SERIES_NUMBER;
+        this.restTimeBetweenSets = DEFAULT_SERIES_REST_TIME;
+        this.exercisesNumber = DEFAULT_EXERCISES_NUMBER;
+        this.restTimeBetweenExercises = DEFAULT_EXERCISES_REST_TIME;
+    }
 
     @Override
     public String loadTraning(String pathStr) {
