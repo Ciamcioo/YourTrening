@@ -1,6 +1,8 @@
 package traning;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.lang.reflect.*;
 import java.io.*;
@@ -26,8 +28,9 @@ public class TraningTest {
     private static Method[] privMethods = Traning.class.getDeclaredMethods(); 
     private static Field[] privFields = Traning.class.getDeclaredFields();
 
-    @Test
+    @Test 
     public void constructorDataConsistentTest() {
+        Traning traning = new Traning();
         Field field = findPrivateField("series");
         try {
             assertEquals(DEFAULT_SERIES_NUMBER.byteValue(), field.getByte(traning));

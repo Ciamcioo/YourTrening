@@ -9,7 +9,8 @@ import java.lang.reflect.*;
 
 public class MenuGUITest {
     private MenuGUI mainMenu = MenuGUI.getIntsance();
-    private static final Method[] privMethods = MenuGUITest.class.getDeclaredMethods();
+    private static final int HEIGHT = 300, WIDTH = 300; 
+    private static final Method[] privMethods = MenuGUI.class.getDeclaredMethods();
 
     @Test 
     public void basicFrameInitalizationTest() {
@@ -65,6 +66,22 @@ public class MenuGUITest {
         assertEquals(title, resultLabel.getText());
     }
 
+    @Test
+    public void mainMenuButtonFactoryTest() {
+        JButton resultButton =  null; 
+        String name = "name";
+        Method mainMenuButtonFactory = findPrivateMethod("mainMenuButtonFactory"); 
+        if (mainMenuButtonFactory == null)
+            fail("Method not found");
+        mainMenuButtonFactory.setAccessible(true);
+        try {
+           resultButton = (JButton) mainMenuButtonFactory.invoke(mainMenu, name); 
+        } catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
+            fail(exception.getCause());
+        }
+        assertTrue(name.equals(resultButton.getText()));
+        assertEquals(new Dimension(WIDTH/5, HEIGHT/10), resultButton.getSize());
+    }
     /**
      * Method seeks for method which name matches with the passed arguemnt.  
      * @param name Name of the method to find
