@@ -1,28 +1,44 @@
 package gui;
 
 import java.awt.Font;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
+import menu.Menu;
 
 public class MenuGUI {
     private static final int HEIGHT = 300, WIDTH = 300; 
     private static MenuGUI instance = null;
-
+    @Nonnull
+    private Menu menu;
     private JFrame frame;
     private JLabel titleLabel;
     private Box buttonArea; 
 
     
-    public static MenuGUI getIntsance() {
+    /**
+     *  Method of singleton design patern returning existing instance of a object or creating a new one. 
+     * @param menu arguemnt passed to the constructor of object in case there is need to create object
+     * @return returns newly created object of MenuiGUI or one that already existed.
+     */
+    public static MenuGUI getIntsance(Menu menu) {
         if (instance == null) {
-            instance = new MenuGUI();
+            instance = new MenuGUI(menu);
         }
         return instance;
     }
-
-    private MenuGUI() {
+    
+    /**
+     *  Constructor of MenuGUI class allowing to create a new gui object with all the initalization of swing components.
+     *  Additionaly function sets the menu field which coresponds to backend system of gui. 
+     * @param menu object handling the logic of menu
+     */
+    private MenuGUI(Menu menu) {
+        this.menu = menu;
         frame = initializeFrame(); 
         titleLabel = initalizeTitleLabel();
-        buttonArea = new Box(BoxLayout.PAGE_AXIS);
+        buttonArea = initalizeMainMenuButtons();
+        addComponentsToContentPane();
         frame.setVisible(true);
     }
 
@@ -61,17 +77,41 @@ public class MenuGUI {
         return label;
     }
 
-    private void initalizeMainMenuButtons() {
-        JButton loadTraning = mainMenuButtonFactory("Load Traning");
+    /**
+     * Method initalize the Box panel containing the main menu buttons.
+     * @return method returns the box area with the buttons.
+     */
+    private Box initalizeMainMenuButtons() {
+        Box area = new Box(BoxLayout.PAGE_AXIS); 
+        area.add(mainMenuButtonFactory("Load Traning", 1));
+        area.add(mainMenuButtonFactory("Start Trening", 2));
+        area.add(mainMenuButtonFactory("Exit", 3));
+        return area;
     }
 
-    private JButton mainMenuButtonFactory(String name) {
-        JButton button = new JButton(name);
+    /**
+     *  Factory method creating button basied on name arugemnt and input arguemtn representen by the button. Method create action listener which will passed input represented by the button.
+     * @param buttonName name of the button
+     * @param validInput input represnted by button
+     * @return returns created button based on the arguments
+     */
+    private JButton mainMenuButtonFactory(String buttonName, int validInput) {
+        JButton button = new JButton(buttonName);
         button.setSize(WIDTH/5, HEIGHT/10);
-        buttonArea.add(Box.createHorizontalGlue());
-        buttonArea.add(button);
-        buttonArea.add(Box.createHorizontalGlue());
+        button.addActionListener(event -> {
+          menu.actionResponse(validInput);
+        }); 
         return button;
     }
+
+
+    /**
+     * Method adds components to content pane of frame
+     */
+    private void addComponentsToContentPane() {
+        frame.getContentPane().add(titleLabel);
+        frame.getContentPane().add(buttonArea);
+    }
+
     
 }
