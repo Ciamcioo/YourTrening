@@ -3,15 +3,15 @@ package yourtraining;
 import menu.Menu;
 
 /**
- * App class executes program. 
+ * App class executes program in Terminal. 
  */
-public class App {
+public class TerminalApp {
     private Menu menu = null;
     
     /**
      * Constructor initalizes the object with the instance of menu.
      */
-    public App() {
+    public TerminalApp() {
         menu = Menu.getInstance();
     }
 
@@ -20,7 +20,7 @@ public class App {
      * @param args arguemnts passed from terminal passed by the user
      */
     public static void main(String[] args) {
-        App app = new App();
+        TerminalApp app = new TerminalApp();
         app.menu.menuRunner();
     }
 }
