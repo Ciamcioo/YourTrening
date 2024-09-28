@@ -7,7 +7,7 @@ import traning.Traning;
 /**
  * Menu class is responsible for handling mneu actions. Class takes the input from ther user and takes action based on it.
  */
-public final class Menu {
+public final class Menu  {
     private static final String MENU_CONTECST = "------ Your trainign main menu ------\n1. Load training\n2. Start training\n3. Exit application\n",
                                 PATH_LOAD_CONTECST = "Provide absolute path to traning file\n";
     private static final int MENU_SIZE = 3, BREAK_HADNLING_INPUT = -1 ;
@@ -49,6 +49,12 @@ public final class Menu {
             clearTerminal();
         } while(!shouldStop);
         closeStream(inputStream);
+    }
+
+    // TODO Lack of test
+    public void actionResponse(int input) {
+        if (validateInput(input)) 
+            performeMenuAction(input);
     }
 
     /**
@@ -109,12 +115,13 @@ public final class Menu {
         return false;
     }
 
+
     /**
      * Method takes action on training object based on the input provided as an argument. 
      * @param input integer representing the action that will be taken on training objet
      * @return method returns true when performing an action on specified traing object needs to be stoped. In other case function returns false.
      */
-    boolean performeMenuAction(int input) {
+    public boolean performeMenuAction(int input) {
         switch(input) {
             case 1 -> { 
                 String path = getPathToTraning(); 
