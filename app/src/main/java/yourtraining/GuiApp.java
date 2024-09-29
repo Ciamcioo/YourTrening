@@ -8,11 +8,10 @@ import javax.swing.*;
  */
 public class GuiApp {
   private Menu menu;
-  private MenuGUI gui;
 
   public GuiApp() {
     menu = Menu.getInstance();
-    gui = MenuGUI.getIntsance(menu);
+    MenuGUI.getIntsance(menu);
   }
   public static void main(String[] args) {
     SwingUtilities.invokeLater(() -> new GuiApp());
