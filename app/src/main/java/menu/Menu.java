@@ -3,7 +3,6 @@ package menu;
 import java.io.*;
 import traning.Traning;
 
-
 /**
  * Menu class is responsible for handling mneu actions. Class takes the input from ther user and takes action based on it.
  */
@@ -44,17 +43,11 @@ public final class Menu  {
         do {
             System.out.print(MENU_CONTECST);
             input = handleInput(inputStream); 
-            shouldStop = performeMenuAction(input);
+            shouldStop = performeMenuAction(ActionType.convertIntegerInputToActionType(input));
             getKeyPress();
             clearTerminal();
         } while(!shouldStop);
         closeStream(inputStream);
-    }
-
-    // TODO Lack of test
-    public void actionResponse(int input) {
-        if (validateInput(input)) 
-            performeMenuAction(input);
     }
 
     /**
@@ -64,14 +57,14 @@ public final class Menu  {
      */
     private int handleInput(InputStream stream) {
         boolean isNotValid = false;
-        int input = -1, attempts = 3; 
+        int integerInput = -1, attempts = 3; 
         do {
-            input = getIntegerInput(stream); 
-            isNotValid = !validateInput(input);
+            integerInput = getIntegerInput(stream); 
+            isNotValid = !validateInput(integerInput);
         } while(isNotValid && attempts-- > 0 );
         if (isNotValid)
             return BREAK_HADNLING_INPUT;
-        return input;
+        return integerInput;
     }
 
     /**
@@ -121,21 +114,21 @@ public final class Menu  {
      * @param input integer representing the action that will be taken on training objet
      * @return method returns true when performing an action on specified traing object needs to be stoped. In other case function returns false.
      */
-    public boolean performeMenuAction(int input) {
+    public boolean performeMenuAction(ActionType input) {
         switch(input) {
-            case 1 -> { 
+            case LOAD_TRANING -> { 
                 String path = getPathToTraning(); 
                 System.out.print(traning.loadTraning(path));
                 return false; 
             }
-            case 2 -> { 
+            case START_TRANING -> { 
                 if (!traning.checkIfTraningIsLoaded()) 
                     System.out.println("Traning is not loaded. Firstly load traning");
                 else
                     traning.procesTraining();
                 return false;
             } 
-            case 3 -> { return true; }
+            case  EXIT -> { return true; }
         }
         return false;
     }

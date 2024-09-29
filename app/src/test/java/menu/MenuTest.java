@@ -121,14 +121,13 @@ class MenuTest {
 
     @Test
     void performeMenuActionTest() {
-        int loadingInput = 1, processingInput = 2,  closingInput = 3;
         boolean result;
-        doReturn(false).when(mockitoMenu).performeMenuAction(loadingInput);
-        result = mockitoMenu.performeMenuAction(loadingInput);
+        doReturn(false).when(mockitoMenu).performeMenuAction(ActionType.LOAD_TRANING);
+        result = mockitoMenu.performeMenuAction(ActionType.LOAD_TRANING);
         assertFalse(result);
-        result = mockitoMenu.performeMenuAction(processingInput);
+        result = mockitoMenu.performeMenuAction(ActionType.START_TRANING);
         assertFalse(result);
-        result = mockitoMenu.performeMenuAction(closingInput);
+        result = mockitoMenu.performeMenuAction(ActionType.EXIT);
         assertTrue(result);
     }
 

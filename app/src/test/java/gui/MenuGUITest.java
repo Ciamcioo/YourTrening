@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import org.junit.jupiter.api.*;
 import java.lang.reflect.*;
+
+import menu.ActionType;
 import menu.Menu;
 
 public class MenuGUITest {
@@ -122,7 +124,7 @@ public class MenuGUITest {
             fail("Method not found");
         mainMenuButtonFactory.setAccessible(true);
         try {
-           resultButton = (JButton) mainMenuButtonFactory.invoke(menuGui, name, 2); 
+           resultButton = (JButton) mainMenuButtonFactory.invoke(menuGui, name, ActionType.START_TRANING); 
         } catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
             fail(exception.getCause());
         }

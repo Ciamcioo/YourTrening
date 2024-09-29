@@ -1,9 +1,9 @@
 package gui;
 
 import java.awt.Font;
-
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import menu.ActionType;
 import menu.Menu;
 
 public class MenuGUI {
@@ -83,9 +83,9 @@ public class MenuGUI {
      */
     private Box initalizeMainMenuButtons() {
         Box area = new Box(BoxLayout.PAGE_AXIS); 
-        area.add(mainMenuButtonFactory("Load Traning", 1));
-        area.add(mainMenuButtonFactory("Start Trening", 2));
-        area.add(mainMenuButtonFactory("Exit", 3));
+        area.add(mainMenuButtonFactory("Load Traning", ActionType.LOAD_TRANING));
+        area.add(mainMenuButtonFactory("Start Trening", ActionType.START_TRANING));
+        area.add(mainMenuButtonFactory("Exit", ActionType.EXIT));
         return area;
     }
 
@@ -95,11 +95,11 @@ public class MenuGUI {
      * @param validInput input represnted by button
      * @return returns created button based on the arguments
      */
-    private JButton mainMenuButtonFactory(String buttonName, int validInput) {
+    private JButton mainMenuButtonFactory(String buttonName, ActionType action) {
         JButton button = new JButton(buttonName);
         button.setSize(WIDTH/5, HEIGHT/10);
         button.addActionListener(event -> {
-          menu.actionResponse(validInput);
+            menu.performeMenuAction(action);
         }); 
         return button;
     }
