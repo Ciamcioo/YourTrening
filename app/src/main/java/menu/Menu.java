@@ -45,7 +45,7 @@ public final class Menu  {
             System.out.print(MENU_CONTECST);
             input = handleInput(inputStream); 
             shouldStop = performeMenuAction(ActionType.convertIntegerInputToActionType(input));
-            getKeyPress();
+            TerminalApp.getKeyPress();
             TerminalApp.clearTerminal();
         } while(!shouldStop);
         closeStream(inputStream);
@@ -157,17 +157,4 @@ public final class Menu  {
         String path = getInput(inputStream);
         return path;
     }
-
-    /**
-     * Method waits for any key press
-     */
-    public static void getKeyPress() {
-        System.out.println("Press any key...");
-        try {
-            System.in.read();
-        } catch(IOException e) {
-            return;
-        }
-    }
-
 }

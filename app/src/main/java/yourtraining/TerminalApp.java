@@ -37,4 +37,13 @@ public class TerminalApp {
             System.out.println("Error during clearing terminal");
         }
     }
+
+    public static void getKeyPress() {
+        System.out.println("Press any key...");
+        try {
+            System.in.read();
+        } catch(IOException e) {
+            return;
+        }
+    }
 }
