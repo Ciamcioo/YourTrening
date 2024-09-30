@@ -2,6 +2,8 @@ package traning;
 
 import java.util.*;
 import menu.Menu;
+import yourtraining.TerminalApp;
+
 import java.io.*;
 import java.nio.file.*;
 
@@ -60,7 +62,7 @@ public class Traning implements TraningManagment{
         System.out.println("Traning will start in 15 seconds...");
         timeCountersTerminator(timeCounter(10));
         timeCountersTerminator(printingTimeCounter(5)); 
-        Menu.clearTerminal();
+        TerminalApp.clearTerminal();
         for (int series_iteration = 1; series_iteration <= series; series_iteration++) {
             System.out.println("Series number: " + series_iteration);
             for (Exercise exercise : exercises) {
@@ -69,14 +71,14 @@ public class Traning implements TraningManagment{
                 timeCountersTerminator(timeCounter(5));
                 System.out.println("Exercise " + exercise.getName() + " starts");
                 timeCountersTerminator(printingTimeCounter(exercise.getExecutionTime()));
-                Menu.clearTerminal();
+                TerminalApp.clearTerminal();
                 System.out.println("Exercise " + exercise.getName() + " ends. Get rest");
                 timeCountersTerminator(printingTimeCounter(restTimeBetweenExercises));
-                Menu.clearTerminal();
+                TerminalApp.clearTerminal();
             }
             System.out.println("Series ends. Get rest.");
             timeCountersTerminator(printingTimeCounter(restTimeBetweenSets));
-            Menu.clearTerminal();
+            TerminalApp.clearTerminal();
         }
         System.out.println("TRANING ENDED");
     }

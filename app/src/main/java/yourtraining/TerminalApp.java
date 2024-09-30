@@ -1,5 +1,6 @@
 package yourtraining;
 
+import java.io.IOException;
 import menu.Menu;
 
 /**
@@ -22,5 +23,18 @@ public class TerminalApp {
     public static void main(String[] args) {
         TerminalApp app = new TerminalApp();
         app.menu.menuRunner();
+    }
+
+    public static void clearTerminal() {
+        try {
+            if (System.getProperty("os.name").contains("Windows"))
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start();
+            else {
+                System.out.println("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (final IOException exception) {
+            System.out.println("Error during clearing terminal");
+        }
     }
 }

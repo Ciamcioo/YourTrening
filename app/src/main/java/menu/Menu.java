@@ -2,6 +2,7 @@ package menu;
 
 import java.io.*;
 import traning.Traning;
+import yourtraining.TerminalApp;
 
 /**
  * Menu class is responsible for handling mneu actions. Class takes the input from ther user and takes action based on it.
@@ -45,7 +46,7 @@ public final class Menu  {
             input = handleInput(inputStream); 
             shouldStop = performeMenuAction(ActionType.convertIntegerInputToActionType(input));
             getKeyPress();
-            clearTerminal();
+            TerminalApp.clearTerminal();
         } while(!shouldStop);
         closeStream(inputStream);
     }
@@ -155,23 +156,6 @@ public final class Menu  {
         System.out.print(PATH_LOAD_CONTECST);
         String path = getInput(inputStream);
         return path;
-    }
-
-    /**
-     *  Method clears terminal from containing data
-     */
-    public static void clearTerminal() {
-        try {
-            if (System.getProperty("os.name").contains("Windows"))
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start();
-            else {
-                System.out.println("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (final IOException exception) {
-            System.out.println("Error during clearing terminal");
-        }
-
     }
 
     /**
