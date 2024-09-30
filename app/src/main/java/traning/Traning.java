@@ -1,9 +1,7 @@
 package traning;
 
 import java.util.*;
-import menu.Menu;
 import yourtraining.TerminalApp;
-
 import java.io.*;
 import java.nio.file.*;
 
