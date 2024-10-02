@@ -11,8 +11,8 @@ import java.nio.file.*;
 public class TraningTest {
     private static final String INCORRECT_STR_INPUT = "word", CORRECT_STR_INPUT = String.valueOf(2),
                                 RESULT_TO_INCORRECT_INPUT_TEMPLATE = "%s has been set to %d, because the value read from file was inapproprited or too big.\n",
-                                PATH_TO_CORRECT_TRANING = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTrainingMock.txt",
-                                PATH_TO_INCORRECT_TRANING = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/incorrectTrainingMock.txt",
+                                PATH_TO_CORRECT_TRAINING = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTrainingMock_TRANING.txt",
+                                PATH_TO_INCORRECT_TRANING = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/incorrectTrainingMock_Traning.txt",
                                 CORRECT_RESULT = "",
                                 INCORRECT_RESULT = "Series number has been set to 127, because the value read from file was inapproprited or too big.\n" + 
                                                    "Rest time between series has been set to 60, because the value read from file was inapproprited or too big.\n" +
@@ -52,7 +52,7 @@ public class TraningTest {
         pathToTraningSchedule = "\0";
         loadingResult = traning.loadTraning(pathToTraningSchedule);
         assertEquals(LOADING_FAIL, loadingResult);
-        loadingResult = traning.loadTraning(PATH_TO_CORRECT_TRANING);
+        loadingResult = traning.loadTraning(PATH_TO_CORRECT_TRAINING);
         assertEquals(LOADING_SUCCESS, loadingResult);
         loadingResult = traning.loadTraning(PATH_TO_INCORRECT_TRANING);
         assertEquals(LOADING_SUCCESS, loadingResult);
@@ -61,7 +61,7 @@ public class TraningTest {
     @Test
     public void checkIfTraningIsLoadedTest() {
         assertFalse(traning.checkIfTraningIsLoaded());
-        traning.loadTraning(PATH_TO_CORRECT_TRANING);
+        traning.loadTraning(PATH_TO_CORRECT_TRAINING);
         assertTrue(traning.checkIfTraningIsLoaded());
     }
 
@@ -73,14 +73,14 @@ public class TraningTest {
             fail("Method not found");
         openTrainingFile.setAccessible(true);
         try {
-            testFile = (FileInputStream) openTrainingFile.invoke(traning, Paths.get("src", "test","resources", "correctTrainingMock.txt").toAbsolutePath());
+            testFile = (FileInputStream) openTrainingFile.invoke(traning, Paths.get("src", "test","resources", "correctTrainingMock_TRANING.txt").toAbsolutePath());
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
         assertNotNull(testFile);
 
         try {
-            testFile = (FileInputStream) openTrainingFile.invoke(traning, Paths.get("src", "test","resources", "incorrectTrainingMock.txt").toAbsolutePath());
+            testFile = (FileInputStream) openTrainingFile.invoke(traning, Paths.get("src", "test","resources", "incorrectTrainingMock_Traning.txt").toAbsolutePath());
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
@@ -100,7 +100,7 @@ public class TraningTest {
     @Test
     public void extractTraningTest() {
         String result = "";  
-        FileInputStream fis = createFileStream(PATH_TO_CORRECT_TRANING);
+        FileInputStream fis = createFileStream(PATH_TO_CORRECT_TRAINING);
         Method extractTraning = findPrivateMethod("extractTraninig"); 
         if (extractTraning == null)
             fail("Method not found");
@@ -388,7 +388,7 @@ public class TraningTest {
             fail("Method not found");
         closeStream.setAccessible(true);
         try {
-            reader = new BufferedReader(new FileReader("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTrainingMock.txt"));
+            reader = new BufferedReader(new FileReader(PATH_TO_CORRECT_TRAINING));
         } catch(Exception e) {
             fail(e.getCause());
         }
@@ -411,12 +411,12 @@ public class TraningTest {
             fail("Method not found");
         generatePath.setAccessible(true); 
         try {
-            resultPath = (Path) generatePath.invoke(traning, PATH_TO_CORRECT_TRANING);
+            resultPath = (Path) generatePath.invoke(traning, PATH_TO_CORRECT_TRAINING);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
         assertNotNull(resultPath);
-        String invalidPathStr = PATH_TO_CORRECT_TRANING;
+        String invalidPathStr = PATH_TO_CORRECT_TRAINING;
         invalidPathStr = "\0";
         try {
             resultPath = (Path) generatePath.invoke(traning, invalidPathStr);
