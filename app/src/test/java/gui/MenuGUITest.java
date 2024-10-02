@@ -8,11 +8,10 @@ import org.junit.jupiter.api.*;
 import java.lang.reflect.*;
 
 import menu.ActionType;
-import menu.Menu;
+import traning.Traning;
 
 public class MenuGUITest {
-    private Menu menu = Menu.getInstance();
-    private MenuGUI menuGui = MenuGUI.getIntsance(menu);
+    private MenuGUI menuGui = MenuGUI.getIntsance();
     private static final int HEIGHT = 300, WIDTH = 300, COMPONENTS_NUMBER = 2; 
     private static final Method[] privMethods = MenuGUI.class.getDeclaredMethods();
     private static final Field[] privFields = MenuGUI.class.getDeclaredFields();
@@ -21,7 +20,7 @@ public class MenuGUITest {
     public void getInstanceTest() {
         MenuGUI testMenu = null;
         assertNull(testMenu);
-        testMenu = MenuGUI.getIntsance(menu);
+        testMenu = MenuGUI.getIntsance();
         assertTrue(menuGui instanceof MenuGUI);
     }
 
@@ -29,8 +28,8 @@ public class MenuGUITest {
     public void constructorMenuGuiTest() {
         Field field = null;
         try {
-          field = findPrivateFields("menu"); 
-          assertEquals(this.menu, (Menu) field.get(menuGui));
+          field = findPrivateFields("traning"); 
+          assertTrue((Traning) field.get(menuGui) instanceof Traning);
           field = findPrivateFields("frame");
           assertTrue((JFrame) field.get(menuGui) instanceof JFrame);
           field = findPrivateFields("titleLabel"); 

@@ -1,16 +1,17 @@
 package gui;
 
+import java.io.*;
 import java.awt.Font;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import menu.ActionType;
-import menu.Menu;
+import traning.Traning;
 
 public class MenuGUI {
     private static final int HEIGHT = 300, WIDTH = 300; 
     private static MenuGUI instance = null;
     @Nonnull
-    private Menu menu;
+    private Traning traning;
     private JFrame frame;
     private JLabel titleLabel;
     private Box buttonArea; 
@@ -21,9 +22,9 @@ public class MenuGUI {
      * @param menu arguemnt passed to the constructor of object in case there is need to create object
      * @return returns newly created object of MenuiGUI or one that already existed.
      */
-    public static MenuGUI getIntsance(Menu menu) {
+    public static MenuGUI getIntsance() {
         if (instance == null) {
-            instance = new MenuGUI(menu);
+            instance = new MenuGUI();
         }
         return instance;
     }
@@ -33,8 +34,8 @@ public class MenuGUI {
      *  Additionaly function sets the menu field which coresponds to backend system of gui. 
      * @param menu object handling the logic of menu
      */
-    private MenuGUI(Menu menu) {
-        this.menu = menu;
+    private MenuGUI() {
+        this.traning = new Traning();
         frame = initializeFrame(); 
         titleLabel = initalizeTitleLabel();
         buttonArea = initalizeMainMenuButtons();
@@ -113,5 +114,20 @@ public class MenuGUI {
         frame.getContentPane().add(buttonArea);
     }
 
+    private void loadTraning() {
+      String appLocalization = System.getProperty("user.dir"); // user.dir property is a property which specifies the directory from which java application was run 
+      File defaultDirecotry = new File(appLocalization, "resources"); 
+      JFileChooser fileChooser = new JFileChooser(defaultDirecotry);
+      fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+      if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+        String loadingResult = traning.loadTraning(fileChooser.getSelectedFile().getAbsolutePath());
+        JOptionPane.showMessageDialog(frame, loadingResult, "Loading Traning Result", JOptionPane.INFORMATION_MESSAGE);
+      } 
+    
+    }
+
+    private void startTraning() {
+
+    }
     
 }
