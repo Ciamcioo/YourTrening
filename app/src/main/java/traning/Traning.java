@@ -14,7 +14,8 @@ public class Traning implements TraningManagment{
                                 EXTRACT_TRANING_ERROR_MESSAGE = "During extracting the data from a file ocuread an error, operation couldn't been finished\n",  
                                 LOADING_FAIL = "TRANING LOADING FAILED\n",
                                 LOADING_SUCCESS = "TRANING LOADING SUCCESSFULL\n",
-                                PROCESSING_TRANING_ERROR_MESSAGE = "Error during processing traning";
+                                PROCESSING_TRANING_ERROR_MESSAGE = "Error during processing traning",
+                                VALID_TRANING_SYNTAX = "_traning.txt";
     private static final byte DEFAULT_SERIES_NUMBER = 1, DEFAULT_EXERCISES_NUMBER = 1;
     private static final long DEFAULT_SERIES_REST_TIME = 60;
     private static final int DEFAULT_EXERCISES_REST_TIME = 15;
@@ -38,17 +39,16 @@ public class Traning implements TraningManagment{
 
     @Override
     public String loadTraning(String pathStr) {
+        boolean isTarningFile = validateIfPathContainsTrainingSyntax(pathStr);
         Path path = generatePath(pathStr);
-        if (path == null)
+        if (path == null || !isTarningFile) 
             return LOADING_FAIL;
         FileInputStream traningSchedule = openTrainingFileStream(path);
-        if (traningSchedule == null) 
-            return LOADING_FAIL;
         String extractionResult = extractTraninig(traningSchedule);
-       if (extractionResult.equals(EXTRACT_TRANING_ERROR_MESSAGE))
+       if (extractionResult == null)
             return EXTRACT_TRANING_ERROR_MESSAGE + LOADING_FAIL;
         else if(!extractionResult.equals(""))
-            System.out.print(extractionResult);
+            return extractionResult + LOADING_SUCCESS;
         return LOADING_SUCCESS;
     }
 
@@ -125,7 +125,7 @@ public class Traning implements TraningManagment{
                 exercises.add(new Exercise(reader.readLine()));
             }
         } catch (IOException e) {
-            return EXTRACT_TRANING_ERROR_MESSAGE; 
+            return null; 
         } finally {
            closeStream(reader); 
         }
@@ -207,6 +207,15 @@ public class Traning implements TraningManagment{
         } catch(InvalidPathException e) {
             return null;
         }
+    }
+
+    /**
+     * Method validates if traning file contains valid syntax at the end to make sure that the correct file is going to be read.
+     * @param path Path to file represented by the String
+     * @return Boolean variable which represents the result of the operation
+     */
+    private boolean validateIfPathContainsTrainingSyntax(String path) {
+        return path.toLowerCase().substring(path.lastIndexOf("/")).contains(VALID_TRANING_SYNTAX);
     }
 
 // SETTERS

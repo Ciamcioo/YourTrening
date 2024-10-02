@@ -12,6 +12,7 @@ public class TraningTest {
     private static final String INCORRECT_STR_INPUT = "word", CORRECT_STR_INPUT = String.valueOf(2),
                                 RESULT_TO_INCORRECT_INPUT_TEMPLATE = "%s has been set to %d, because the value read from file was inapproprited or too big.\n",
                                 PATH_TO_CORRECT_TRAINING = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTrainingMock_TRANING.txt",
+                                PATH_TO_CORRECT_TRAINING_WITH_INCORECT_NAME = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correcTrainingMockWithIncoretFileName.txt",
                                 PATH_TO_INCORRECT_TRANING = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/incorrectTrainingMock_Traning.txt",
                                 CORRECT_RESULT = "",
                                 INCORRECT_RESULT = "Series number has been set to 127, because the value read from file was inapproprited or too big.\n" + 
@@ -52,10 +53,12 @@ public class TraningTest {
         pathToTraningSchedule = "\0";
         loadingResult = traning.loadTraning(pathToTraningSchedule);
         assertEquals(LOADING_FAIL, loadingResult);
+        loadingResult = traning.loadTraning(PATH_TO_CORRECT_TRAINING_WITH_INCORECT_NAME);
+        assertEquals(LOADING_FAIL, loadingResult);
         loadingResult = traning.loadTraning(PATH_TO_CORRECT_TRAINING);
         assertEquals(LOADING_SUCCESS, loadingResult);
         loadingResult = traning.loadTraning(PATH_TO_INCORRECT_TRANING);
-        assertEquals(LOADING_SUCCESS, loadingResult);
+        assertEquals(INCORRECT_RESULT + LOADING_SUCCESS, loadingResult);
     }
 
     @Test
@@ -235,6 +238,27 @@ public class TraningTest {
         assertThrows(InvocationTargetException.class, () -> timeCountersTerminator.invoke(traning, false));
 
         timeCountersTerminator.setAccessible(false);
+    }
+
+    @Test
+    public void validateIfPathContainsTraningSyntaxTest() {
+      Method validateIfPathContainsTrainingSyntax = findPrivateMethod("validateIfPathContainsTrainingSyntax"); 
+      boolean methodResult = false;
+      if (validateIfPathContainsTrainingSyntax == null)
+        fail("Method not found");
+      validateIfPathContainsTrainingSyntax.setAccessible(true);
+          try {
+            methodResult = (Boolean) validateIfPathContainsTrainingSyntax.invoke(traning, PATH_TO_CORRECT_TRAINING);
+            assertTrue(methodResult);
+
+            methodResult = (Boolean) validateIfPathContainsTrainingSyntax.invoke(traning, PATH_TO_CORRECT_TRAINING_WITH_INCORECT_NAME);
+            assertFalse(methodResult);
+
+            methodResult = (Boolean) validateIfPathContainsTrainingSyntax.invoke(traning, PATH_TO_INCORRECT_TRANING);
+            assertTrue(methodResult);
+          } catch (IllegalAccessException | InvocationTargetException e) {
+              fail(e.getCause());
+          }
     }
 
 
