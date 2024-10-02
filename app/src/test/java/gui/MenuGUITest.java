@@ -117,13 +117,13 @@ public class MenuGUITest {
     @Test
     public void mainMenuButtonFactoryTest() {
         JButton resultButton =  null; 
-        String name = "name";
+        String name = ActionType.LOAD_TRANING.getOperationName();
         Method mainMenuButtonFactory = findPrivateMethod("mainMenuButtonFactory"); 
         if (mainMenuButtonFactory == null)
             fail("Method not found");
         mainMenuButtonFactory.setAccessible(true);
         try {
-           resultButton = (JButton) mainMenuButtonFactory.invoke(menuGui, name, ActionType.START_TRANING); 
+           resultButton = (JButton) mainMenuButtonFactory.invoke(menuGui, ActionType.LOAD_TRANING); 
         } catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
             fail(exception.getCause());
         }

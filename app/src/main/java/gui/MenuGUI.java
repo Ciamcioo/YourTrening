@@ -84,9 +84,9 @@ public class MenuGUI {
      */
     private Box initalizeMainMenuButtons() {
         Box area = new Box(BoxLayout.PAGE_AXIS); 
-        area.add(mainMenuButtonFactory("Load Traning", ActionType.LOAD_TRANING));
-        area.add(mainMenuButtonFactory("Start Trening", ActionType.START_TRANING));
-        area.add(mainMenuButtonFactory("Exit", ActionType.EXIT));
+        area.add(mainMenuButtonFactory(ActionType.LOAD_TRANING));
+        area.add(mainMenuButtonFactory(ActionType.START_TRANING));
+        area.add(mainMenuButtonFactory(ActionType.EXIT));
         return area;
     }
 
@@ -96,11 +96,11 @@ public class MenuGUI {
      * @param validInput input represnted by button
      * @return returns created button based on the arguments
      */
-    private JButton mainMenuButtonFactory(String buttonName, ActionType action) {
-        JButton button = new JButton(buttonName);
+    private JButton mainMenuButtonFactory(ActionType action) {
+        JButton button = new JButton(action.getOperationName());
         button.setSize(WIDTH/5, HEIGHT/10);
         button.addActionListener(event -> {
-            menu.performeMenuAction(action);
+            createResponseAction(action).run();
         }); 
         return button;
     }
