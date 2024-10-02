@@ -36,7 +36,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("yourtraining.App")
+    mainClass.set("yourtraining.GuiApp")
 }
 
 tasks.named<Test>("test") {
@@ -46,6 +46,6 @@ tasks.named<Test>("test") {
 
 tasks.jar {
     manifest {
-        attributes("Main-Class" to "yourtraining.App")
+        attributes("Main-Class" to "yourtraining.GuiApp")
     }
 }
