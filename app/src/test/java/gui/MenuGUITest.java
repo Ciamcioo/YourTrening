@@ -7,10 +7,8 @@ import static org.mockito.Mockito.when;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
-
 import java.lang.reflect.*;
 
 import menu.ActionType;
@@ -53,6 +51,7 @@ public class MenuGUITest {
         JFrame resultFrame = new JFrame();
         Container startPanel = resultFrame.getContentPane();
         String frameTitle = "Your training";
+        final int WIDTH = 300, HEIGHT = 300;
         Method initalizeFrame = findPrivateMethod("initializeFrame");
         if (initalizeFrame == null)
             fail("Method not found");
@@ -64,7 +63,8 @@ public class MenuGUITest {
         }
         
         assertEquals(frameTitle, resultFrame.getTitle());
-        assertEquals(new Dimension(300, 300), resultFrame.getSize());
+        assertEquals(new Dimension(2*WIDTH, 2*HEIGHT), resultFrame.getSize());
+        assertEquals(new Dimension(WIDTH, HEIGHT), resultFrame.getMinimumSize());
         assertEquals(JFrame.EXIT_ON_CLOSE, resultFrame.getDefaultCloseOperation());
         assertFalse(startPanel.equals(resultFrame.getContentPane()));
         

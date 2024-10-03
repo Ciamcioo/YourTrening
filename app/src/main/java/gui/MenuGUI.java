@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.*;
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -50,7 +51,8 @@ public class MenuGUI {
     private JFrame initializeFrame() {
         JFrame frame = new JFrame();
         frame.setTitle("Your training");
-        frame.setSize(WIDTH, HEIGHT);
+        frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        frame.setSize(WIDTH*2, HEIGHT*2);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(mainPanelInitalization());
         return frame;
