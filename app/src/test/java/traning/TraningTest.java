@@ -9,37 +9,23 @@ import java.util.*;
 import java.nio.file.*;
 
 public class TraningTest {
-    private static final String INCORRECT_STR_INPUT = "word", CORRECT_STR_INPUT = String.valueOf(2),
-                                RESULT_TO_INCORRECT_INPUT_TEMPLATE = "%s has been set to %d, because the value read from file was inapproprited or too big.\n",
-                                PATH_TO_CORRECT_TRAINING = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTrainingMock_TRANING.txt",
-                                PATH_TO_CORRECT_TRAINING_WITH_INCORECT_NAME = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correcTrainingMockWithIncoretFileName.txt",
-                                PATH_TO_INCORRECT_TRANING = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/incorrectTrainingMock_Traning.txt",
-                                CORRECT_RESULT = "",
-                                INCORRECT_RESULT = "Series number has been set to 127, because the value read from file was inapproprited or too big.\n" + 
-                                                   "Rest time between series has been set to 60, because the value read from file was inapproprited or too big.\n" +
-                                                   "Rest time between exercises has been set to 2147483647, because the value read from file was inapproprited or too big.\n",
-                                LOADING_FAIL = "TRANING LOADING FAILED\n",
-                                LOADING_SUCCESS = "TRANING LOADING SUCCESSFULL\n";
-    private static final Byte DEFAULT_SERIES_NUMBER = 1, DEFAULT_EXERCISES_NUMBER = 1;
-    private static final Long DEFAULT_SERIES_REST_TIME = 60L, DEFAULT_EXERCISES_REST_TIME = 15L, MILLISECONDS_IN_SECOND = 1000L;
-
     private static String tooLargeInput, variableName;
-    private static Traning traning = new Traning();
-    private static Method[] privMethods = Traning.class.getDeclaredMethods(); 
-    private static Field[] privFields = Traning.class.getDeclaredFields();
+    private static TrainingConstants traning = new TrainingConstants();
+    private static Method[] privMethods = TrainingConstants.class.getDeclaredMethods(); 
+    private static Field[] privFields = TrainingConstants.class.getDeclaredFields();
 
     @Test 
     public void constructorDataConsistentTest() {
-        Traning traning = new Traning();
+        TrainingConstants traning = new TrainingConstants();
         Field field = findPrivateField("series");
         try {
-            assertEquals(DEFAULT_SERIES_NUMBER.byteValue(), field.getByte(traning));
+            assertEquals(DEFAULT_VALUES.SERIES_NUMBER.byteValue(), field.getByte(traning));
             field = findPrivateField("restTimeBetweenSets") ;
-            assertEquals(DEFAULT_SERIES_REST_TIME, field.getLong(traning));
+            assertEquals(DEFAULT_VALUES.SERIES_REST_TIME, field.getLong(traning));
             field = findPrivateField("exercisesNumber");
-            assertEquals(DEFAULT_EXERCISES_NUMBER, field.getByte(traning));
+            assertEquals(DEFAULT_VALUES.EXERCISES_NUMBER, field.getByte(traning));
             field = findPrivateField("restTimeBetweenExercises");
-            assertEquals(DEFAULT_EXERCISES_REST_TIME, field.getInt(traning));
+            assertEquals(DEFAULT_VALUES.EXERCISES_REST_TIME, field.getInt(traning));
         } catch(IllegalAccessException exception) {
             fail("Illegal Access Excpetion");
         }
@@ -49,22 +35,22 @@ public class TraningTest {
     public void loadTraningTest() {
         String pathToTraningSchedule = "home/ciamcio/";
         String loadingResult = traning.loadTraning(pathToTraningSchedule);
-        assertEquals(LOADING_FAIL, loadingResult);
+        assertEquals(RESULT.LOADING_FAIL, loadingResult);
         pathToTraningSchedule = "\0";
         loadingResult = traning.loadTraning(pathToTraningSchedule);
-        assertEquals(LOADING_FAIL, loadingResult);
-        loadingResult = traning.loadTraning(PATH_TO_CORRECT_TRAINING_WITH_INCORECT_NAME);
-        assertEquals(LOADING_FAIL, loadingResult);
-        loadingResult = traning.loadTraning(PATH_TO_CORRECT_TRAINING);
-        assertEquals(LOADING_SUCCESS, loadingResult);
-        loadingResult = traning.loadTraning(PATH_TO_INCORRECT_TRANING);
-        assertEquals(INCORRECT_RESULT + LOADING_SUCCESS, loadingResult);
+        assertEquals(RESULT.LOADING_FAIL, loadingResult);
+        loadingResult = traning.loadTraning(PATH.TO_CORRECT_TRAINING_WITH_INCORECT_NAME);
+        assertEquals(RESULT.LOADING_FAIL, loadingResult);
+        loadingResult = traning.loadTraning(PATH.TO_CORRECT_TRAINING);
+        assertEquals(RESULT.LOADING_SUCCESS, loadingResult);
+        loadingResult = traning.loadTraning(PATH.TO_INCORRECT_TRANING);
+        assertEquals(RESULT.INCORRECT + RESULT.LOADING_SUCCESS, loadingResult);
     }
 
     @Test
     public void checkIfTraningIsLoadedTest() {
         assertFalse(traning.checkIfTraningIsLoaded());
-        traning.loadTraning(PATH_TO_CORRECT_TRAINING);
+        traning.loadTraning(PATH.TO_CORRECT_TRAINING);
         assertTrue(traning.checkIfTraningIsLoaded());
     }
 
@@ -103,7 +89,7 @@ public class TraningTest {
     @Test
     public void extractTraningTest() {
         String result = "";  
-        FileInputStream fis = createFileStream(PATH_TO_CORRECT_TRAINING);
+        FileInputStream fis = createFileStream(PATH.TO_CORRECT_TRAINING);
         Method extractTraning = findPrivateMethod("extractTraninig"); 
         if (extractTraning == null)
             fail("Method not found");
@@ -113,15 +99,15 @@ public class TraningTest {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(CORRECT_RESULT, result);
+        assertEquals(RESULT.CORRECT, result);
 
-        fis = createFileStream(PATH_TO_INCORRECT_TRANING);
+        fis = createFileStream(PATH.TO_INCORRECT_TRANING);
         try {
             result = (String) extractTraning.invoke(traning, fis);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(INCORRECT_RESULT, result);
+        assertEquals(RESULT.INCORRECT, result);
 
         extractTraning.setAccessible(false);
         extractTraning = null;
@@ -193,7 +179,7 @@ public class TraningTest {
             fail(e.getCause());
         }
         assertTrue(functionResult);
-        assertTrue(timeToPass * MILLISECONDS_IN_SECOND - (MILLISECONDS_IN_SECOND/2) < systemTimeDifference && systemTimeDifference < timeToPass * MILLISECONDS_IN_SECOND + (MILLISECONDS_IN_SECOND / 2));
+        assertTrue(timeToPass * DEFAULT_VALUES.MILLISECONDS_IN_SECOND - (DEFAULT_VALUES.MILLISECONDS_IN_SECOND/2) < systemTimeDifference && systemTimeDifference < timeToPass * DEFAULT_VALUES.MILLISECONDS_IN_SECOND + (DEFAULT_VALUES.MILLISECONDS_IN_SECOND / 2));
 
         timeCounter.setAccessible(false);
         timeCounter = null;
@@ -214,7 +200,7 @@ public class TraningTest {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertTrue(timeToPass* MILLISECONDS_IN_SECOND - (MILLISECONDS_IN_SECOND / 2) < systemTimeDifference && systemTimeDifference < timeToPass * MILLISECONDS_IN_SECOND + (MILLISECONDS_IN_SECOND / 2));
+        assertTrue(timeToPass* DEFAULT_VALUES.MILLISECONDS_IN_SECOND - (DEFAULT_VALUES.MILLISECONDS_IN_SECOND / 2) < systemTimeDifference && systemTimeDifference < timeToPass * DEFAULT_VALUES.MILLISECONDS_IN_SECOND + (DEFAULT_VALUES.MILLISECONDS_IN_SECOND / 2));
         assertTrue(functionResult);
 
         printingTimeCounter.setAccessible(false);
@@ -248,13 +234,13 @@ public class TraningTest {
         fail("Method not found");
       validateIfPathContainsTrainingSyntax.setAccessible(true);
           try {
-            methodResult = (Boolean) validateIfPathContainsTrainingSyntax.invoke(traning, PATH_TO_CORRECT_TRAINING);
+            methodResult = (Boolean) validateIfPathContainsTrainingSyntax.invoke(traning, PATH.TO_CORRECT_TRAINING);
             assertTrue(methodResult);
 
-            methodResult = (Boolean) validateIfPathContainsTrainingSyntax.invoke(traning, PATH_TO_CORRECT_TRAINING_WITH_INCORECT_NAME);
+            methodResult = (Boolean) validateIfPathContainsTrainingSyntax.invoke(traning, PATH.TO_CORRECT_TRAINING_WITH_INCORECT_NAME);
             assertFalse(methodResult);
 
-            methodResult = (Boolean) validateIfPathContainsTrainingSyntax.invoke(traning, PATH_TO_INCORRECT_TRANING);
+            methodResult = (Boolean) validateIfPathContainsTrainingSyntax.invoke(traning, PATH.TO_INCORRECT_TRANING);
             assertTrue(methodResult);
           } catch (IllegalAccessException | InvocationTargetException e) {
               fail(e.getCause());
@@ -264,7 +250,7 @@ public class TraningTest {
 
     @Test
     public void setSeriesTest() {
-        String result = CORRECT_RESULT; 
+        String result = RESULT.CORRECT; 
         variableName = "Series number";
         tooLargeInput = String.valueOf(Byte.MAX_VALUE + 1);
         Method setSeries = findPrivateMethod("setSeries");
@@ -272,24 +258,23 @@ public class TraningTest {
             fail("Method not found");
         setSeries.setAccessible(true);
         try {
-            result = (String) setSeries.invoke(traning, INCORRECT_STR_INPUT);
+            result = (String) setSeries.invoke(traning, INPUT.INNCORRECT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, DEFAULT_SERIES_NUMBER), result);
+        assertEquals(String.format(RESULT.OUTPUT_TEMPLET, variableName, DEFAULT_VALUES.SERIES_NUMBER), result);
         try {
-            result = (String) setSeries.invoke(traning, CORRECT_STR_INPUT);
+            result = (String) setSeries.invoke(traning, INPUT.CORRECT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(CORRECT_RESULT, result);
-
+        assertEquals(RESULT.CORRECT, result);
         try {
             result = (String) setSeries.invoke(traning, tooLargeInput);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Byte.MAX_VALUE), result);
+        assertEquals(String.format(RESULT.OUTPUT_TEMPLET, variableName, Byte.MAX_VALUE), result);
 
         setSeries.setAccessible(false);
         setSeries = null;
@@ -297,7 +282,7 @@ public class TraningTest {
 
     @Test
     public void setRestTimeBetweenSeriesTest() {
-        String result = CORRECT_RESULT;
+        String result = RESULT.CORRECT;
         variableName = "Rest time between series"; // Possible optimalization by creating enum class 
         tooLargeInput = String.valueOf(Long.MAX_VALUE); // there is a problem with converting number because the converter is not working properly
         Method setRestTimeBetweenSeries = findPrivateMethod("setRestTimeBetweenSeries");
@@ -306,25 +291,25 @@ public class TraningTest {
             fail("Method not found");
         setRestTimeBetweenSeries.setAccessible(true);
         try {
-            result = (String) setRestTimeBetweenSeries.invoke(traning, INCORRECT_STR_INPUT);
+            result = (String) setRestTimeBetweenSeries.invoke(traning, INPUT.INNCORRECT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, DEFAULT_SERIES_REST_TIME), result);
+        assertEquals(String.format(RESULT.OUTPUT_TEMPLET, variableName, DEFAULT_VALUES.SERIES_REST_TIME), result);
 
         try {
-            result = (String) setRestTimeBetweenSeries.invoke(traning, CORRECT_STR_INPUT);
+            result = (String) setRestTimeBetweenSeries.invoke(traning, INPUT.CORRECT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(CORRECT_RESULT, result);
+        assertEquals(RESULT.CORRECT, result);
 
         try {
             result = (String) setRestTimeBetweenSeries.invoke(traning, tooLargeInput);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Long.MAX_VALUE), result);
+        assertEquals(String.format(RESULT.OUTPUT_TEMPLET, variableName, Long.MAX_VALUE), result);
 
         setRestTimeBetweenSeries.setAccessible(false);
         setRestTimeBetweenSeries = null;
@@ -332,7 +317,7 @@ public class TraningTest {
 
     @Test
     public void setExercisesNumberTest() {
-        String result = CORRECT_RESULT; 
+        String result = RESULT.CORRECT; 
         variableName = "Exercises number";
         tooLargeInput = String.valueOf(Byte.MAX_VALUE + 1);
         Method setExercisesNumber = findPrivateMethod("setExercisesNumber");
@@ -342,25 +327,24 @@ public class TraningTest {
         setExercisesNumber.setAccessible(true);
 
         try {
-            result = (String) setExercisesNumber.invoke(traning, INCORRECT_STR_INPUT);
+            result = (String) setExercisesNumber.invoke(traning, INPUT.INNCORRECT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, DEFAULT_EXERCISES_NUMBER), result);
+        assertEquals(String.format(RESULT.OUTPUT_TEMPLET, variableName, DEFAULT_VALUES.EXERCISES_NUMBER), result);
 
         try {
-            result = (String) setExercisesNumber.invoke(traning, CORRECT_STR_INPUT);
+            result = (String) setExercisesNumber.invoke(traning, INPUT.CORRECT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(CORRECT_RESULT, result);
-
+        assertEquals(RESULT.CORRECT, result);
         try {
             result = (String) setExercisesNumber.invoke(traning, tooLargeInput);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Byte.MAX_VALUE), result);
+        assertEquals(String.format(RESULT.OUTPUT_TEMPLET, variableName, Byte.MAX_VALUE), result);
 
         setExercisesNumber.setAccessible(false);
         setExercisesNumber = null;
@@ -368,7 +352,7 @@ public class TraningTest {
 
     @Test
     public void setRestTimeBetweenExercisesTest() {
-        String result = CORRECT_RESULT; 
+        String result = RESULT.CORRECT; 
         variableName = "Rest time between exercises";
         tooLargeInput = String.valueOf(Integer.MAX_VALUE);
         Method setRestTimeExercises = findPrivateMethod("setRestTimeBetweenExercises");
@@ -378,25 +362,25 @@ public class TraningTest {
         setRestTimeExercises.setAccessible(true);
 
         try {
-            result = (String) setRestTimeExercises.invoke(traning, INCORRECT_STR_INPUT);
+            result = (String) setRestTimeExercises.invoke(traning, INPUT.INNCORRECT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, DEFAULT_EXERCISES_REST_TIME), result);
+        assertEquals(String.format(RESULT.OUTPUT_TEMPLET, variableName, DEFAULT_VALUES.EXERCISES_REST_TIME), result);
 
         try {
-            result = (String) setRestTimeExercises.invoke(traning, CORRECT_STR_INPUT);
+            result = (String) setRestTimeExercises.invoke(traning, INPUT.CORRECT);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(CORRECT_RESULT, result);
+        assertEquals(RESULT.CORRECT, result);
 
         try {
             result = (String) setRestTimeExercises.invoke(traning, tooLargeInput);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(String.format(RESULT_TO_INCORRECT_INPUT_TEMPLATE, variableName, Integer.MAX_VALUE), result);
+        assertEquals(String.format(RESULT.OUTPUT_TEMPLET, variableName, Integer.MAX_VALUE), result);
 
         setRestTimeExercises.setAccessible(false);
         setRestTimeExercises = null;
@@ -412,7 +396,7 @@ public class TraningTest {
             fail("Method not found");
         closeStream.setAccessible(true);
         try {
-            reader = new BufferedReader(new FileReader(PATH_TO_CORRECT_TRAINING));
+            reader = new BufferedReader(new FileReader(PATH.TO_CORRECT_TRAINING));
         } catch(Exception e) {
             fail(e.getCause());
         }
@@ -435,12 +419,12 @@ public class TraningTest {
             fail("Method not found");
         generatePath.setAccessible(true); 
         try {
-            resultPath = (Path) generatePath.invoke(traning, PATH_TO_CORRECT_TRAINING);
+            resultPath = (Path) generatePath.invoke(traning, PATH.TO_CORRECT_TRAINING);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
         assertNotNull(resultPath);
-        String invalidPathStr = PATH_TO_CORRECT_TRAINING;
+        String invalidPathStr = PATH.TO_CORRECT_TRAINING;
         invalidPathStr = "\0";
         try {
             resultPath = (Path) generatePath.invoke(traning, invalidPathStr);
