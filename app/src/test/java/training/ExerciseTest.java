@@ -1,4 +1,4 @@
-package traning;
+package training;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;

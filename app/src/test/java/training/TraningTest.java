@@ -1,4 +1,4 @@
-package traning;
+package training;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,13 +10,13 @@ import java.nio.file.*;
 
 public class TraningTest {
     private static String tooLargeInput, variableName;
-    private static TrainingConstants traning = new TrainingConstants();
-    private static Method[] privMethods = TrainingConstants.class.getDeclaredMethods(); 
-    private static Field[] privFields = TrainingConstants.class.getDeclaredFields();
+    private static Training traning = new Training();
+    private static Method[] privMethods = Training.class.getDeclaredMethods(); 
+    private static Field[] privFields = Training.class.getDeclaredFields();
 
     @Test 
     public void constructorDataConsistentTest() {
-        TrainingConstants traning = new TrainingConstants();
+        Training traning = new Training();
         Field field = findPrivateField("series");
         try {
             assertEquals(DEFAULT_VALUES.SERIES_NUMBER.byteValue(), field.getByte(traning));

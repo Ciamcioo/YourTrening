@@ -1,4 +1,4 @@
-package traning;
+package training;
 
 import java.util.*;
 import yourtraining.TerminalApp;
@@ -8,7 +8,7 @@ import java.nio.file.*;
 /**
  * Trening class representing the trening unit. Handling the functionality of training: loading, saving and procesing. 
  */
-public class Traning implements TraningManagment{
+public class Training implements TraningManagment{
     private static final String INCORECT_INPUT_TEMPLET = "%s has been set to %d, because the value read from file was inapproprited or too big.\n", 
                                 CORRECT_INPUT_VALUE = "",
                                 EXTRACT_TRANING_ERROR_MESSAGE = "During extracting the data from a file ocuread an error, operation couldn't been finished\n",  
@@ -30,7 +30,7 @@ public class Traning implements TraningManagment{
     /**
      * Default consturcotr handling the initalization of object to avoid any secuirty risks. 
      */
-    public Traning() {
+    public Training() {
         this.series = DEFAULT_SERIES_NUMBER;
         this.restTimeBetweenSets = DEFAULT_SERIES_REST_TIME;
         this.exercisesNumber = DEFAULT_EXERCISES_NUMBER;

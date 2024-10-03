@@ -6,13 +6,13 @@ import java.awt.Font;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import menu.ActionType;
-import traning.Traning;
+import training.Training;
 
 public class MenuGUI {
     private static final int HEIGHT = 300, WIDTH = 300; 
     private static MenuGUI instance = null;
     @Nonnull
-    private Traning traning;
+    private Training training;
     private JFrame frame;
     private JLabel titleLabel;
     private Box buttonArea; 
@@ -36,7 +36,7 @@ public class MenuGUI {
      * @param menu object handling the logic of menu
      */
     private MenuGUI() {
-        this.traning = new Traning();
+        this.training = new Training();
         frame = initializeFrame(); 
         titleLabel = initalizeTitleLabel();
         buttonArea = initalizeMainMenuButtons();

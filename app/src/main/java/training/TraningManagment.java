@@ -1,4 +1,4 @@
-package traning;
+package training;
 
 /**
  * TraingManagment interface definig the functionality of trenings.

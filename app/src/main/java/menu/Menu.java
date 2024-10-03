@@ -2,7 +2,7 @@ package menu;
 
 import java.io.*;
 
-import traning.Traning;
+import training.Training;
 import yourtraining.TerminalApp;
 
 /**
@@ -15,7 +15,7 @@ public final class Menu  {
 
     private static Menu instance;
     private InputStream inputStream = System.in;
-    private Traning traning = null;
+    private Training traning = null;
 
     /**
      * Method implements the Singleton design pattern to ensure that the only one instance of the Menu class is created. 
@@ -32,7 +32,7 @@ public final class Menu  {
      * Private constructor used when new instance of menu class is created
      */
     private Menu() {
-        traning = new Traning();
+        traning = new Training();
     }
 
     /**

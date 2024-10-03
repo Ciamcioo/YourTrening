@@ -1,4 +1,4 @@
-package traning;
+package training;
 
 class INPUT {
   static final String INNCORRECT = "word";

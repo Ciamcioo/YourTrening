@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import java.lang.reflect.*;
 
 import menu.ActionType;
-import traning.Traning;
+import training.Training;
 
 public class MenuGUITest {
     private MenuGUI menuGui = MenuGUI.getIntsance();
@@ -33,7 +33,7 @@ public class MenuGUITest {
         Field field = null;
         try {
           field = findPrivateFields("traning"); 
-          assertTrue((Traning) field.get(menuGui) instanceof Traning);
+          assertTrue((Training) field.get(menuGui) instanceof Training);
           field = findPrivateFields("frame");
           assertTrue((JFrame) field.get(menuGui) instanceof JFrame);
           field = findPrivateFields("titleLabel"); 
