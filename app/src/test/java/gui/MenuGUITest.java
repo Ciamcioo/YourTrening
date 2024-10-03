@@ -1,10 +1,16 @@
 package gui;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+
 import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
+
 import java.lang.reflect.*;
 
 import menu.ActionType;
@@ -153,7 +159,37 @@ public class MenuGUITest {
         if (resultFrame == null)
           fail("Frame shouldn't be null");
        assertEquals(COMPONENTS_NUMBER, resultFrame.getContentPane().getComponentCount()); 
+    }
+
+    @Test
+    public void getTrainingFileTest() {
+      JFileChooser mockFileChooser = Mockito.mock(JFileChooser.class) ;
+      File mockFile = new File("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTrainingMock_TRANING.txt");
+      File resultFile = null;
+      when(mockFileChooser.showOpenDialog(any())).thenReturn(JFileChooser.APPROVE_OPTION);
+      when(mockFileChooser.getSelectedFile()).thenReturn(mockFile);
+      Method getTrainingFile = findPrivateMethod("getTrainingFile"); 
+      if (getTrainingFile == null)
+        fail("Method not found");
+      getTrainingFile.setAccessible(true);
+      try {
+        resultFile = (File) getTrainingFile.invoke(menuGui, mockFileChooser);
+      } catch (IllegalAccessException | InvocationTargetException e) {
+        fail(e.getCause());
+      }      
+      assertNotNull(resultFile);
+      assertEquals(mockFile, resultFile);
+      when(mockFileChooser.showOpenDialog(any())).thenReturn(JFileChooser.ERROR_OPTION);
+      when(mockFileChooser.getSelectedFile()).thenReturn(null);
+
+      try {
+        resultFile = (File) getTrainingFile.invoke(menuGui, mockFileChooser);
+      } catch (IllegalAccessException | InvocationTargetException exception) {
+        fail(exception.getCause());
       }
+      assertNull(resultFile);
+    } 
+      
 
     /**
      * Method seeks for method which name matches with the passed arguemnt.  

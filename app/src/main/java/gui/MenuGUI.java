@@ -114,16 +114,18 @@ public class MenuGUI {
         frame.getContentPane().add(buttonArea);
     }
 
-    private void loadTraning() {
+    /**
+     * Method is reposnisble for reciving from user a file representing the training file. File is retrived from user with use of user interface.
+     * @return File which was choosen by the user with use of UI
+     */
+    private File getTrainingFile(JFileChooser fileChooser) {
       String appLocalization = System.getProperty("user.dir"); // user.dir property is a property which specifies the directory from which java application was run 
       File defaultDirecotry = new File(appLocalization, "resources"); 
-      JFileChooser fileChooser = new JFileChooser(defaultDirecotry);
+      fileChooser.setCurrentDirectory(defaultDirecotry);;
       fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-      if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
-        String loadingResult = traning.loadTraning(fileChooser.getSelectedFile().getAbsolutePath());
-        JOptionPane.showMessageDialog(frame, loadingResult, "Loading Traning Result", JOptionPane.INFORMATION_MESSAGE);
-      } 
-    
+      if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION)
+        return fileChooser.getSelectedFile();
+      return null;
     }
 
     private void startTraning() {

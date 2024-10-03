@@ -215,6 +215,8 @@ public class Traning implements TraningManagment{
      * @return Boolean variable which represents the result of the operation
      */
     private boolean validateIfPathContainsTrainingSyntax(String path) {
+        if (!path.contains("/"))
+          return false;
         return path.toLowerCase().substring(path.lastIndexOf("/")).contains(VALID_TRANING_SYNTAX);
     }
 

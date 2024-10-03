@@ -47,7 +47,7 @@ public class TraningTest {
     }
     @Test
     public void loadTraningTest() {
-        String pathToTraningSchedule = "empty";
+        String pathToTraningSchedule = "home/ciamcio/";
         String loadingResult = traning.loadTraning(pathToTraningSchedule);
         assertEquals(LOADING_FAIL, loadingResult);
         pathToTraningSchedule = "\0";
