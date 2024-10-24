@@ -15,7 +15,7 @@ import menu.ActionType;
 import training.Training;
 
 public class MenuGUITest {
-    private MenuGUI menuGui = MenuGUI.getIntsance();
+    private MenuGUI menuGui = MenuGUI.getInstance();
     private static final int HEIGHT = 300, WIDTH = 300, COMPONENTS_NUMBER = 2; 
     private static final Method[] privMethods = MenuGUI.class.getDeclaredMethods();
     private static final Field[] privFields = MenuGUI.class.getDeclaredFields();
@@ -24,7 +24,7 @@ public class MenuGUITest {
     public void getInstanceTest() {
         MenuGUI testMenu = null;
         assertNull(testMenu);
-        testMenu = MenuGUI.getIntsance();
+        testMenu = MenuGUI.getInstance();
         assertTrue(menuGui instanceof MenuGUI);
     }
 
@@ -32,7 +32,7 @@ public class MenuGUITest {
     public void constructorMenuGuiTest() {
         Field field = null;
         try {
-          field = findPrivateFields("traning"); 
+          field = findPrivateFields("training"); 
           assertTrue((Training) field.get(menuGui) instanceof Training);
           field = findPrivateFields("frame");
           assertTrue((JFrame) field.get(menuGui) instanceof JFrame);
@@ -47,17 +47,17 @@ public class MenuGUITest {
     }
     
     @Test 
-    public void basicFrameInitalizationTest() {
+    public void basicFrameInitializationTest() {
         JFrame resultFrame = new JFrame();
         Container startPanel = resultFrame.getContentPane();
         String frameTitle = "Your training";
         final int WIDTH = 300, HEIGHT = 300;
-        Method initalizeFrame = findPrivateMethod("initializeFrame");
-        if (initalizeFrame == null)
+        Method initializeFrame = findPrivateMethod("initializeFrame");
+        if (initializeFrame == null)
             fail("Method not found");
-        initalizeFrame.setAccessible(true);
+        initializeFrame.setAccessible(true);
         try {
-            resultFrame = (JFrame) initalizeFrame.invoke(menuGui); 
+            resultFrame = (JFrame) initializeFrame.invoke(menuGui); 
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
             fail(exception.getCause());
         }
@@ -71,14 +71,14 @@ public class MenuGUITest {
     }
 
     @Test
-    public void basicPanelInitalizationTest() {
+    public void basicPanelInitializationTest() {
         JPanel resultPanel = new JPanel();
-        Method mainPanelInitalization = findPrivateMethod("mainPanelInitalization");
-        if (mainPanelInitalization == null)
+        Method mainPanelInitialization = findPrivateMethod("mainPanelInitialization");
+        if (mainPanelInitialization == null)
             fail("Method not found");
-        mainPanelInitalization.setAccessible(true);
+        mainPanelInitialization.setAccessible(true);
         try {
-            resultPanel = (JPanel) mainPanelInitalization.invoke(menuGui);
+            resultPanel = (JPanel) mainPanelInitialization.invoke(menuGui);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
             fail(exception.getCause());
         }
@@ -86,15 +86,15 @@ public class MenuGUITest {
     }
 
     @Test
-    public void basicTitleLabelInitalization() {
+    public void basicTitleLabelInitialization() {
         JLabel resultLabel = new JLabel();
-        String title = "Your traning";
-        Method initalizeTitleLabel = findPrivateMethod("initalizeTitleLabel");
-        if (initalizeTitleLabel == null)
-            fail("Mehtod not found");
-        initalizeTitleLabel.setAccessible(true);
+        String title = "Your training";
+        Method initializeTitleLabel = findPrivateMethod("initializeTitleLabel");
+        if (initializeTitleLabel == null)
+            fail("Method not found");
+        initializeTitleLabel.setAccessible(true);
         try {
-            resultLabel = (JLabel) initalizeTitleLabel.invoke(menuGui);
+            resultLabel = (JLabel) initializeTitleLabel.invoke(menuGui);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
             fail(exception.getCause());
         }
@@ -103,33 +103,33 @@ public class MenuGUITest {
     }
 
     @Test
-    public void initalizeMainMenuButtonsTest() {
-      Box resutlBox = null;
-      Method initalizeMainMenuButtons = findPrivateMethod("initalizeMainMenuButtons");
+    public void initializeMainMenuButtonsTest() {
+      Box resultBox = null;
+      Method initializationMainMenuButtons = findPrivateMethod("initializeMainMenuButtons");
       final int BUTTONS_NUM = 3;
-      if (initalizeMainMenuButtons == null)
-        fail("Mehotd shouldn't be null");
-      initalizeMainMenuButtons.setAccessible(true);
+      if (initializationMainMenuButtons == null)
+        fail("Method shouldn't be null");
+      initializationMainMenuButtons.setAccessible(true);
       try {
-        resutlBox = (Box) initalizeMainMenuButtons.invoke(menuGui);
+        resultBox = (Box) initializationMainMenuButtons.invoke(menuGui);
       } catch (IllegalAccessException | InvocationTargetException e) {
           fail(e.getCause());
       }
-      assertNotNull(resutlBox);
-      assertEquals(BUTTONS_NUM, resutlBox.getComponentCount());
+      assertNotNull(resultBox);
+      assertEquals(BUTTONS_NUM, resultBox.getComponentCount());
 
     }
 
     @Test
     public void mainMenuButtonFactoryTest() {
         JButton resultButton =  null; 
-        String name = ActionType.LOAD_TRANING.getOperationName();
+        String name = ActionType.LOAD_TRAINING.getOperationName();
         Method mainMenuButtonFactory = findPrivateMethod("mainMenuButtonFactory"); 
         if (mainMenuButtonFactory == null)
             fail("Method not found");
         mainMenuButtonFactory.setAccessible(true);
         try {
-           resultButton = (JButton) mainMenuButtonFactory.invoke(menuGui, ActionType.LOAD_TRANING); 
+           resultButton = (JButton) mainMenuButtonFactory.invoke(menuGui, ActionType.LOAD_TRAINING); 
         } catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
             fail(exception.getCause());
         }
@@ -164,7 +164,7 @@ public class MenuGUITest {
     @Test
     public void getTrainingFileTest() {
       JFileChooser mockFileChooser = Mockito.mock(JFileChooser.class) ;
-      File mockFile = new File("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTrainingMock_TRANING.txt");
+      File mockFile = new File("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTrainingMock_TRAINING.txt");
       File resultFile = null;
       when(mockFileChooser.showOpenDialog(any())).thenReturn(JFileChooser.APPROVE_OPTION);
       when(mockFileChooser.getSelectedFile()).thenReturn(mockFile);
@@ -192,7 +192,7 @@ public class MenuGUITest {
       
 
     /**
-     * Method seeks for method which name matches with the passed arguemnt.  
+     * Method seeks for method which name matches with the passed argument.  
      * @param name Name of the method to find
      * @return Reference to the Method object if there is method with such a name. In other case method returns null.
      */
@@ -205,7 +205,7 @@ public class MenuGUITest {
     }
 
     /**
-     * Method seeks for field which name matches the passed name arguemtnt. 
+     * Method seeks for field which name matches the passed name argument. 
      * @param name name of the field
      * @return field that matches the name
      */

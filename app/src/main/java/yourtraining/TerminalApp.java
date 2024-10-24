@@ -10,7 +10,7 @@ public class TerminalApp {
     private Menu menu = null;
     
     /**
-     * Constructor initalizes the object with the instance of menu.
+     * Constructor initializes the object with the instance of menu.
      */
     public TerminalApp() {
         menu = Menu.getInstance();
@@ -18,7 +18,7 @@ public class TerminalApp {
 
     /**
      * Main function which invokes the program to run.
-     * @param args arguemnts passed from terminal passed by the user
+     * @param args arguments passed from terminal passed by the user
      */
     public static void main(String[] args) {
         TerminalApp app = new TerminalApp();

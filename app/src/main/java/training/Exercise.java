@@ -3,7 +3,7 @@ package training;
 import java.util.*;
 
 /**
- * Exercise class represent single exercises with data conected with it.
+ * Exercise class represent single exercises with data connected with it.
  */
 class Exercise {
     private static final String DEFAULT_NAME = "None exercise name", DEFAULT_DESCRIPTION = "Lack of description";
@@ -28,7 +28,7 @@ class Exercise {
     }
 
     /**
-     * Function validates number of information contained in line, in case of missing infomration list is filled with empty records.   
+     * Function validates number of information contained in line, in case of missing information list is filled with empty records.   
      * @param exerciseData list containing the single line representing the one exercise 
      * @return integer representing the amount of missing data in the line representing exercise
      */
@@ -52,8 +52,8 @@ class Exercise {
 
 // SETTERS
     /**
-     * Name variable exercise setter for exerciese object. If the vlaue passed as an argument is not empty the exercise's name is set.
-     * @param name arguemnt containing exercise name provided by the user 
+     * Name variable exercise setter for exercises object. If the value passed as an argument is not empty the exercise's name is set.
+     * @param name argument containing exercise name provided by the user 
      */
     protected void setName(String name) {
         if (!name.equals(""))
@@ -63,8 +63,8 @@ class Exercise {
     }
 
     /**
-     * Execution time variable setter for exerciese object. If the argument is within the range of zero to Integer max then the execution time is set.  
-     * @param executionTime arguemnt containing execution time provided by the user 
+     * Execution time variable setter for exercises object. If the argument is within the range of zero to Integer max then the execution time is set.  
+     * @param executionTime argument containing execution time provided by the user 
      */
     protected void setExecutionTime(long executionTime) {
         if (executionTime < Integer.MAX_VALUE && executionTime > 0)
@@ -74,8 +74,8 @@ class Exercise {
     }
 
     /**
-     * Exercise description setter for exercisese object. If the arguemnt is empty, the description will be set to default value. In other case the description is set to the value of argument.  
-     * @param description argument describing the exercise provided as an arguemnt
+     * Exercise description setter for exercises object. If the argument is empty, the description will be set to default value. In other case the description is set to the value of argument.  
+     * @param description argument describing the exercise provided as an argument
      */
     protected void setDescription(String description) {
         if (!description.equals("") || description == null)  

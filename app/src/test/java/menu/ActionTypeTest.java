@@ -20,9 +20,9 @@ public class ActionTypeTest {
         fail("Method shouldn't be null");
       convertIntegerInputToActionType.setAccessible(true);
       ActionType resultActionType = (ActionType) convertIntegerInputToActionType.invoke(ActionType.class, 1);
-      assertEquals(ActionType.LOAD_TRANING, resultActionType);
+      assertEquals(ActionType.LOAD_TRAINING, resultActionType);
       resultActionType = (ActionType) convertIntegerInputToActionType.invoke(ActionType.class, 2);
-      assertEquals(ActionType.START_TRANING, resultActionType);
+      assertEquals(ActionType.START_TRAINING, resultActionType);
       resultActionType = (ActionType) convertIntegerInputToActionType.invoke(ActionType.class, 3);
       assertEquals(ActionType.EXIT, resultActionType);
       resultActionType = (ActionType) convertIntegerInputToActionType.invoke(ActionType.class, new Random().nextInt());

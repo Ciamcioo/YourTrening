@@ -107,7 +107,7 @@ class MenuTest {
             validationResults.add((Boolean) validateInput.invoke(menu, zeroInput));
             validationResults.add((Boolean) validateInput.invoke(menu, oversizeInput));
         } catch(Exception e) {
-            fail("Method shouldn't throw an expception");      
+            fail("Method shouldn't throw an exception");      
         }
 
         assertTrue(validationResults.get(0));
@@ -120,14 +120,14 @@ class MenuTest {
     }
 
     @Test
-    void performeMenuActionTest() {
+    void performMenuActionTest() {
         boolean result;
-        doReturn(false).when(mockitoMenu).performeMenuAction(ActionType.LOAD_TRANING);
-        result = mockitoMenu.performeMenuAction(ActionType.LOAD_TRANING);
+        doReturn(false).when(mockitoMenu).performMenuAction(ActionType.LOAD_TRAINING);
+        result = mockitoMenu.performMenuAction(ActionType.LOAD_TRAINING);
         assertFalse(result);
-        result = mockitoMenu.performeMenuAction(ActionType.START_TRANING);
+        result = mockitoMenu.performMenuAction(ActionType.START_TRAINING);
         assertFalse(result);
-        result = mockitoMenu.performeMenuAction(ActionType.EXIT);
+        result = mockitoMenu.performMenuAction(ActionType.EXIT);
         assertTrue(result);
     }
 
@@ -142,7 +142,7 @@ class MenuTest {
             fail("Method not found");
         closeStream.setAccessible(true);
         try {
-            reader = new BufferedReader(new FileReader("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTrainingMock_TRANING.txt"));
+            reader = new BufferedReader(new FileReader("/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTrainingMock_TRAINING.txt"));
         } catch(Exception e) {
             fail(e.getCause());
         }
@@ -158,14 +158,14 @@ class MenuTest {
     }
 
     @Test
-    void getPathToTraningTest() {
+    void getPathToTrainingTest() {
         String path = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/correctTraningMock.txt";
-        doReturn(path).when(mockitoMenu).getPathToTraning();
-        String result = mockitoMenu.getPathToTraning();
+        doReturn(path).when(mockitoMenu).getPathToTraining();
+        String result = mockitoMenu.getPathToTraining();
         assertEquals(path, result);
         path = "/home/ciamcio/workspace/javaPrograming/YourTraining/app/src/test/resources/incorrectTraninigMock.txt";
-        doReturn(path).when(mockitoMenu).getPathToTraning();
-        result = mockitoMenu.getPathToTraning();        
+        doReturn(path).when(mockitoMenu).getPathToTraining();
+        result = mockitoMenu.getPathToTraining();        
         assertEquals(path, result);
     }
 

@@ -1,8 +1,8 @@
 package menu;
 
 public enum ActionType {
-  LOAD_TRANING("Load traning"),
-  START_TRANING("Start traning"),
+  LOAD_TRAINING("Load training"),
+  START_TRAINING("Start training"),
   EXIT("Exit application");
 
   private final String operationName;
@@ -13,8 +13,8 @@ public enum ActionType {
 
   public static ActionType convertIntegerInputToActionType(int input) {
       switch (input) {
-        case 1 -> { return LOAD_TRANING; } 
-        case 2 -> { return START_TRANING; }
+        case 1 -> { return LOAD_TRAINING; } 
+        case 2 -> { return START_TRAINING; }
         case 3 -> { return EXIT; }
         default -> {return null; }
     }

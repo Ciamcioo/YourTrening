@@ -8,7 +8,7 @@ import javax.swing.*;
  */
 public class GuiApp {
   public GuiApp() {
-    MenuGUI.getIntsance();
+    MenuGUI.getInstance();
   }
   public static void main(String[] args) {
     SwingUtilities.invokeLater(() -> new GuiApp());
