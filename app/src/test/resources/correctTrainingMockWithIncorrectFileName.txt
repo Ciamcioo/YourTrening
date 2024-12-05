@@ -1,0 +1,5 @@
+3
+60
+2
+15
+Exercises1,30,It is a description of first exercises.

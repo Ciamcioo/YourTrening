@@ -1,4 +1,4 @@
-package traning;
+package training;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -19,7 +19,7 @@ class ExerciseTest {
         String incorrectExerciseMock = ",30,It is a description of first exercise."; 
         long resultExecutionTime = -1;
         Method getName = findMethod("getName"), getExecutionTime = findMethod("getExecutionTime"), getDescription = findMethod("getDescription");  
-        String[] exerciseSplited = correctExerciseMock.split(",");
+        String[] exerciseSplitted = correctExerciseMock.split(",");
 
         if (getName == null)
             fail("Method getName not found");
@@ -36,11 +36,11 @@ class ExerciseTest {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
-        assertEquals(exerciseSplited[0], resultName);
-        assertEquals(exerciseSplited[1], String.valueOf(resultExecutionTime));
-        assertEquals(exerciseSplited[2], resultDescription);
+        assertEquals(exerciseSplitted[0], resultName);
+        assertEquals(exerciseSplitted[1], String.valueOf(resultExecutionTime));
+        assertEquals(exerciseSplitted[2], resultDescription);
 
-        exerciseSplited = incorrectExerciseMock.split(",");
+        exerciseSplitted = incorrectExerciseMock.split(",");
         exercise = new Exercise(incorrectExerciseMock);
         try {
             resultName = (String) getName.invoke(exercise);
@@ -50,11 +50,11 @@ class ExerciseTest {
             fail(e.getCause());
         } 
         assertEquals("None exercise name", resultName);
-        assertEquals(exerciseSplited[1], String.valueOf(resultExecutionTime));
-        assertEquals(exerciseSplited[2], resultDescription);
+        assertEquals(exerciseSplitted[1], String.valueOf(resultExecutionTime));
+        assertEquals(exerciseSplitted[2], resultDescription);
         
         incorrectExerciseMock = "Exercise1,-1,It is a description of first exercise."; 
-        exerciseSplited = incorrectExerciseMock.split(",");
+        exerciseSplitted = incorrectExerciseMock.split(",");
         exercise = new Exercise(incorrectExerciseMock);
 
         try {
@@ -64,12 +64,12 @@ class ExerciseTest {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         } 
-        assertEquals(exerciseSplited[0], resultName);
+        assertEquals(exerciseSplitted[0], resultName);
         assertEquals("45", String.valueOf(resultExecutionTime));
-        assertEquals(exerciseSplited[2], resultDescription);
+        assertEquals(exerciseSplitted[2], resultDescription);
         
         incorrectExerciseMock = "Exercise1,"+Integer.MAX_VALUE+1+","; 
-        exerciseSplited = incorrectExerciseMock.split(",");
+        exerciseSplitted = incorrectExerciseMock.split(",");
         exercise = new Exercise(incorrectExerciseMock);
 
         try {
@@ -79,7 +79,7 @@ class ExerciseTest {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         } 
-        assertEquals(exerciseSplited[0], resultName);
+        assertEquals(exerciseSplitted[0], resultName);
         assertEquals("45", String.valueOf(resultExecutionTime));
         assertEquals("Lack of description", resultDescription);
 
@@ -91,12 +91,12 @@ class ExerciseTest {
     void fillExercisesInformationSizeDifferenceTest() {
         int resultSize = 0;
         List<String> exerciseData = new ArrayList<>();
-        Method fillExercisesInfromation = findMethod("lineExerciseInformationSizeDifference");
-        if (fillExercisesInfromation == null)
+        Method fillExercisesInformation = findMethod("lineExerciseInformationSizeDifference");
+        if (fillExercisesInformation == null)
             fail("Method not found");
-        fillExercisesInfromation.setAccessible(true);
+        fillExercisesInformation.setAccessible(true);
         try {
-            resultSize = (int) fillExercisesInfromation.invoke(exercise, exerciseData);
+            resultSize = (int) fillExercisesInformation.invoke(exercise, exerciseData);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
@@ -106,7 +106,7 @@ class ExerciseTest {
         exerciseData = new ArrayList<>();
         exerciseData.add("");
         try {
-            resultSize = (int) fillExercisesInfromation.invoke(exercise, exerciseData);
+            resultSize = (int) fillExercisesInformation.invoke(exercise, exerciseData);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
@@ -118,7 +118,7 @@ class ExerciseTest {
         exerciseData.add("");
         exerciseData.add("");
         try {
-            resultSize = (int) fillExercisesInfromation.invoke(exercise, exerciseData);
+            resultSize = (int) fillExercisesInformation.invoke(exercise, exerciseData);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
@@ -130,15 +130,15 @@ class ExerciseTest {
         exerciseData.add("");
         exerciseData.add("");
         try {
-            resultSize = (int) fillExercisesInfromation.invoke(exercise, exerciseData);
+            resultSize = (int) fillExercisesInformation.invoke(exercise, exerciseData);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail(e.getCause());
         }
         assertEquals(0, resultSize);
         assertEquals(EXERCISE_INFORMATION_IN_LINE, exerciseData.size()); 
 
-        fillExercisesInfromation.setAccessible(false);
-        fillExercisesInfromation = null;
+        fillExercisesInformation.setAccessible(false);
+        fillExercisesInformation = null;
     } 
 
     Method findMethod(String methodName) {
